@@ -5,11 +5,11 @@ func _process(delta):
 		start_game()
 		pass
 
-func _on_start_button_pressed() -> void:
+func _on_restart_button_pressed() -> void:
 	start_game()
 	pass
 
 func start_game():
-	print("Starting game")
-	get_tree().change_scene_to_file("res://scenes/game.tscn")
+	print("Going to start screen")
+	get_tree().change_scene_to_file("res://scenes/start_screen.tscn")
 	pass
