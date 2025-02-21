@@ -17,7 +17,6 @@ position_smoothing_enabled = true
 
 [node name="spawner" parent="." instance=ExtResource("2_x6m2a")]
 position = Vector2(484, 476)
-platform_scene = ExtResource("2_jurr8")
 
 [node name="platform" parent="spawner" instance=ExtResource("2_jurr8")]
 position = Vector2(0, 5)
@@ -26,4 +25,4 @@ position = Vector2(0, 5)
 position = Vector2(520, 469)
 
 [node name="killzone" parent="." instance=ExtResource("4_ujtyr")]
-position = Vector2(485, 495)
+position = Vector2(483, 540)

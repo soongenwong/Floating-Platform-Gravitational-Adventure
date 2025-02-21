@@ -1,10 +1,18 @@
 extends Area2D
 
 @onready var timer = $Timer
+@export var speed: float = 50.0
+
+func _process(delta: float) -> void:
+	position.y -= speed * delta
 
 func _on_body_entered(body: Node2D) -> void:
-	print("Died skill issue :(")
-	timer.start()
+	if body.is_in_group("Player"):
+		print("Died skill issue :(")
+		timer.start()
+	else:
+		body.queue_free()
+		print("body deleted")
 	pass
 
 
