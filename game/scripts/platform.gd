@@ -1,12 +1,14 @@
 extends Node2D
 
 @export var platform_scene: PackedScene
+@export var coin_scene: PackedScene
 @export var spawn_count: int = 100
 @export var spawn_range_x: Vector2 = Vector2(-100, 100)
 @export var spawn_range_y: Vector2 = Vector2(-1000, 0)
 
 func _ready():
 	spawn_platforms()
+	spawn_coin()
 
 func spawn_platforms():
 	for i in range(spawn_count):
@@ -16,3 +18,8 @@ func spawn_platforms():
 			randf_range(spawn_range_y.x, spawn_range_y.y)
 		)
 		add_child(platform)
+
+func spawn_coin():
+	var coin = coin_scene.instantiate()
+	coin.position = Vector2(0, spawn_range_y.x)
+	add_child(coin)
