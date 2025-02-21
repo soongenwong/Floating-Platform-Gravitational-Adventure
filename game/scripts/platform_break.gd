@@ -4,7 +4,7 @@ extends AnimatableBody2D
 
 func _on_area_2d_body_entered(body):
 	#print("on platform")
-	$Timer.start(1.5)
+	$Timer.start(0.5)
 	
 
 

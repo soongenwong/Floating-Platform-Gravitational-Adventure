@@ -56,6 +56,7 @@ position_smoothing_enabled = true
 
 [node name="spawner" parent="." instance=ExtResource("2_x6m2a")]
 position = Vector2(484, 476)
+platform_break_scene = ExtResource("4_v0pxv")
 
 [node name="platform" parent="spawner" instance=ExtResource("2_jurr8")]
 position = Vector2(0, 5)
