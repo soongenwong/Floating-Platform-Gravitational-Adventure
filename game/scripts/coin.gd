@@ -4,6 +4,7 @@ extends Area2D
 
 func _on_body_entered(body: Node2D) -> void:
 	if body.is_in_group("Player"):
+		# here send message aws saying this player won
 		#print("you win")
 		timer.start()
 	pass

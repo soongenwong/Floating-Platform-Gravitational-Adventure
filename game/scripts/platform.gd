@@ -6,9 +6,14 @@ extends Node2D
 @export var spawn_range_x: Vector2 = Vector2(-100, 100)
 @export var spawn_range_y: Vector2 = Vector2(-1000, 0)
 
+var platform_locations = []
+
 func _ready():
 	spawn_platforms()
 	spawn_coin()
+	
+	# share platform_locations to aws
+	
 
 func spawn_platforms():
 	for i in range(spawn_count):
@@ -17,6 +22,8 @@ func spawn_platforms():
 			randf_range(spawn_range_x.x, spawn_range_x.y),
 			randf_range(spawn_range_y.x, spawn_range_y.y)
 		)
+		platform_locations.append(platform.position)
+		
 		add_child(platform)
 
 func spawn_coin():

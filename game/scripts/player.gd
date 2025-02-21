@@ -5,6 +5,8 @@ const SPEED = 130.0
 const JUMP_VELOCITY = -500.0
 
 
+# add inputs from fpga here (keep keyboard input tho)
+# share position of player from here
 func _physics_process(delta: float) -> void:
 
 	if not is_on_floor():
