@@ -1,7 +1,7 @@
 [gd_scene load_steps=3 format=3 uid="uid://bggt1xytex803"]
 
 [ext_resource type="Script" path="res://scripts/death_screen.gd" id="1_bcks8"]
-[ext_resource type="Script" path="res://scripts/restart_button.gd" id="2_hs2ly"]
+[ext_resource type="Script" path="res://scripts/button_text_resize.gd" id="2_ob8l0"]
 
 [node name="death_screen" type="Control"]
 layout_mode = 3
@@ -14,11 +14,23 @@ script = ExtResource("1_bcks8")
 
 [node name="RestartButton" type="Button" parent="."]
 layout_mode = 0
-offset_left = 842.0
-offset_top = 382.0
-offset_right = 1198.0
-offset_bottom = 579.0
+offset_left = 699.0
+offset_top = 679.0
+offset_right = 1055.0
+offset_bottom = 876.0
 text = "Restart"
-script = ExtResource("2_hs2ly")
+script = ExtResource("2_ob8l0")
+
+[node name="TextEdit" type="TextEdit" parent="."]
+layout_mode = 0
+offset_left = 485.0
+offset_top = 71.0
+offset_right = 1287.0
+offset_bottom = 542.0
+text = "You Died
+Skill issue
+get better
+L
+:("
 
 [connection signal="pressed" from="RestartButton" to="." method="_on_restart_button_pressed"]

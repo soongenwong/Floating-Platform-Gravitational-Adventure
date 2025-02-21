@@ -1,7 +1,7 @@
 [gd_scene load_steps=3 format=3 uid="uid://qrkmhde05bes"]
 
 [ext_resource type="Script" path="res://scripts/start_screen.gd" id="1_asv3o"]
-[ext_resource type="Script" path="res://start_button.gd" id="2_yd7x5"]
+[ext_resource type="Script" path="res://scripts/button_text_resize.gd" id="2_n0v4i"]
 
 [node name="start_screen" type="Control"]
 layout_mode = 3
@@ -19,6 +19,6 @@ offset_top = 262.0
 offset_right = 1321.0
 offset_bottom = 798.0
 text = "Start"
-script = ExtResource("2_yd7x5")
+script = ExtResource("2_n0v4i")
 
 [connection signal="pressed" from="StartButton" to="." method="_on_start_button_pressed"]

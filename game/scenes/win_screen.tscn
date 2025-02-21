@@ -1,0 +1,22 @@
+[gd_scene load_steps=3 format=3 uid="uid://cgjax7gj8jepj"]
+
+[ext_resource type="Script" path="res://scripts/win_screen.gd" id="1_leiig"]
+[ext_resource type="Script" path="res://scripts/button_text_resize.gd" id="2_jgd53"]
+
+[node name="win_screen" type="Control"]
+layout_mode = 3
+anchors_preset = 15
+anchor_right = 1.0
+anchor_bottom = 1.0
+grow_horizontal = 2
+grow_vertical = 2
+script = ExtResource("1_leiig")
+
+[node name="RestartButton" type="Button" parent="."]
+layout_mode = 0
+offset_right = 8.0
+offset_bottom = 8.0
+text = "Restart"
+script = ExtResource("2_jgd53")
+
+[connection signal="pressed" from="RestartButton" to="." method="_on_restart_button_pressed"]

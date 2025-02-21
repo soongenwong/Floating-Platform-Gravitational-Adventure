@@ -1,4 +1,4 @@
-[gd_scene load_steps=5 format=3 uid="uid://togd14600646"]
+[gd_scene load_steps=5 format=3 uid="uid://dgvn2kuhxwki3"]
 
 [ext_resource type="Script" path="res://scripts/platform_break.gd" id="1_tycn0"]
 [ext_resource type="Texture2D" uid="uid://bex8psexmlebj" path="res://assets/sprites/platforms.png" id="2_cth27"]

@@ -4,7 +4,7 @@
 [ext_resource type="PackedScene" uid="uid://diqpanf0l17mx" path="res://scenes/platform.tscn" id="2_jurr8"]
 [ext_resource type="PackedScene" uid="uid://3gccikpwen1o" path="res://scenes/spawner.tscn" id="2_x6m2a"]
 [ext_resource type="PackedScene" uid="uid://bhanswg0aefdr" path="res://scenes/killzone.tscn" id="4_ujtyr"]
-[ext_resource type="PackedScene" path="res://scenes/platform_break.tscn" id="4_v0pxv"]
+[ext_resource type="PackedScene" uid="uid://dgvn2kuhxwki3" path="res://scenes/platform_break.tscn" id="4_v0pxv"]
 
 [node name="Game" type="Node2D"]
 
@@ -25,4 +25,4 @@ position = Vector2(0, 5)
 position = Vector2(520, 469)
 
 [node name="killzone" parent="." instance=ExtResource("4_ujtyr")]
-position = Vector2(483, 540)
+position = Vector2(484, 579)

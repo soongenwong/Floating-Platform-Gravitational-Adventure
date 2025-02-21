@@ -10,6 +10,6 @@ func _on_start_button_pressed() -> void:
 	pass
 
 func start_game():
-	print("Starting game")
+	#print("starting game")
 	get_tree().change_scene_to_file("res://scenes/game.tscn")
 	pass
