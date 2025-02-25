@@ -1,10 +1,14 @@
-[gd_scene load_steps=4 format=3 uid="uid://3gccikpwen1o"]
+[gd_scene load_steps=6 format=3 uid="uid://3gccikpwen1o"]
 
 [ext_resource type="Script" path="res://scripts/platform.gd" id="1_3hunn"]
 [ext_resource type="PackedScene" uid="uid://diqpanf0l17mx" path="res://scenes/platform.tscn" id="2_wwq3i"]
+[ext_resource type="PackedScene" uid="uid://dgvn2kuhxwki3" path="res://scenes/platform_break.tscn" id="3_1pi0b"]
 [ext_resource type="PackedScene" uid="uid://bf3m5rai5xd5q" path="res://scenes/coin.tscn" id="3_klkuc"]
+[ext_resource type="PackedScene" uid="uid://b8tyy0b6h3yah" path="res://scenes/platform_move.tscn" id="4_1b74l"]
 
 [node name="spawner" type="Node2D"]
 script = ExtResource("1_3hunn")
 platform_scene = ExtResource("2_wwq3i")
+platform_break_scene = ExtResource("3_1pi0b")
+platform_moving_scene = ExtResource("4_1b74l")
 coin_scene = ExtResource("3_klkuc")
