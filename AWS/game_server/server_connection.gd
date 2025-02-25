@@ -1,7 +1,8 @@
 extends Node
 
    var socket = WebSocketPeer.new()
-   var server_url = "ws://18.170.74.19:8080"  # Your EC2 instance's public IP
+   var server_url = "ws://18.170.74.19:8080"  
+   var _ws_url = "ws://localhost:8080"
    var game_state = {}
    var connected = false
 
@@ -35,7 +36,6 @@ extends Node
            var code = socket.get_close_code()
            var reason = socket.get_close_reason()
            print("Connection closed with code: %d, reason: %s" % [code, reason])
-           # Maybe reconnect here
 
    func send_game_state(state_data):
        if connected:
@@ -47,6 +47,4 @@ extends Node
            socket.send_text(json_str)
            
    func update_game_with_state(state):
-       # Update your game objects based on the received state
-       # This depends on your specific game implementation
        pass

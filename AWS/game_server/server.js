@@ -23,7 +23,6 @@ wss.on('connection', (ws) => {
       console.log('Received:', data);
       
       if (data.type === 'state_update') {
-        // Update game state
         gameState = {...gameState, ...data.data};
         
         // Broadcast to all clients
