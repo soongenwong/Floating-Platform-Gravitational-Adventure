@@ -6,7 +6,7 @@
 [sub_resource type="CircleShape2D" id="CircleShape2D_md46s"]
 radius = 5.0
 
-[node name="Player 2" type="CharacterBody2D"]
+[node name="Player 2" type="CharacterBody2D" groups=["Player_2"]]
 script = ExtResource("1_cl3mv")
 
 [node name="Sprite2D" type="Sprite2D" parent="."]

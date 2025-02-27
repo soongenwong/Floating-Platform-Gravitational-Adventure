@@ -1,5 +1,10 @@
 extends Control
 
+@onready var text_edit = $TextEdit
+
+func _ready():
+	text_edit.text = Global.winner_text
+
 func _process(delta):
 	if Input.is_action_just_pressed("ui_accept"):
 		start_game()
