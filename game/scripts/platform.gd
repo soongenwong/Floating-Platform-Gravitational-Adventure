@@ -10,12 +10,26 @@ extends Node2D
 @export var spawn_range_x: Vector2 = Vector2(-100, 100)
 @export var spawn_range_y: Vector2 = Vector2(-1000, 0)
 
-var platform_locations = []
-
 func _ready():
-	spawn_platforms()
-	spawn_break()
-	#spawn_moving()
+	if (GameManager.player == 1):
+		spawn_platforms()
+		spawn_break()
+		spawn_moving()
+	else:
+		for i in GameManager.platform_pos:
+			var platform = platform_scene.instantiate()
+			platform.position = GameManager.platform_pos[i]
+			add_child(platform)
+		for i in GameManager.platform_break_pos:
+			var platform_break = platform_break_scene.instantiate()
+			platform_break.position = GameManager.platform_break_pos[i]
+			add_child(platform_break)
+		for i in GameManager.platform_moving_pos:
+			var platform_moving = platform_moving_scene.instantiate()
+			platform_moving.position = GameManager.platform_moving_pos[i]
+			add_child(platform_moving)
+		
+		
 	spawn_coin()
 	
 	# share platform_locations to aws
@@ -28,7 +42,7 @@ func spawn_platforms():
 			randf_range(spawn_range_x.x, spawn_range_x.y),
 			randf_range(spawn_range_y.x, spawn_range_y.y)
 		)
-		platform_locations.append(platform.position)
+		GameManager.platform_pos.append(platform.position)
 		
 		add_child(platform)
 
@@ -39,7 +53,7 @@ func spawn_break():
 			randf_range(spawn_range_x.x, spawn_range_x.y),
 			randf_range(spawn_range_y.x, spawn_range_y.y)
 		)
-		
+		GameManager.platform_break_pos.append(platform_break.position)
 		add_child(platform_break)
 		
 func spawn_moving():
@@ -49,7 +63,7 @@ func spawn_moving():
 			randf_range(spawn_range_x.x, spawn_range_x.y),
 			randf_range(spawn_range_y.x, spawn_range_y.y)
 		)
-		
+		GameManager.platform_moving_pos.append(platform_moving.position)
 		add_child(platform_moving)
 
 func spawn_coin():

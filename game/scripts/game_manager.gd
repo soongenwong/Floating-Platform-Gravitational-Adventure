@@ -2,6 +2,12 @@ extends Node
 
 var score: int = 0
 var score_label: Label = null
+var player: int = 1
+
+# platform positions
+var platform_pos = []
+var platform_break_pos = []
+var platform_moving_pos = []
 
 func _ready() -> void:
 	pass
