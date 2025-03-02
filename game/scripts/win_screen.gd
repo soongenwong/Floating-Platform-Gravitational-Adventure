@@ -1,6 +1,6 @@
 extends Control
 
-@onready var text_edit = $TextEdit
+@onready var text_edit =  $TextEdit
 
 func _ready():
 	text_edit.text = Global.winner_text

@@ -2,7 +2,7 @@
 
 [ext_resource type="PackedScene" uid="uid://87y1humnb1j4" path="res://scenes/player.tscn" id="1_u8hxa"]
 [ext_resource type="PackedScene" uid="uid://diqpanf0l17mx" path="res://scenes/platform.tscn" id="2_jurr8"]
-[ext_resource type="PackedScene" uid="uid://d041q4p7tarf" path="res://scenes/score.tscn" id="2_r6e4h"]
+[ext_resource type="PackedScene" path="res://scenes/score.tscn" id="2_r6e4h"]
 [ext_resource type="PackedScene" uid="uid://3gccikpwen1o" path="res://scenes/spawner.tscn" id="2_x6m2a"]
 [ext_resource type="PackedScene" uid="uid://bhanswg0aefdr" path="res://scenes/killzone.tscn" id="4_ujtyr"]
 [ext_resource type="PackedScene" uid="uid://dgvn2kuhxwki3" path="res://scenes/platform_break.tscn" id="4_v0pxv"]
@@ -16,6 +16,7 @@ position = Vector2(482.682, 450.027)
 
 [node name="Camera2Df" type="Camera2D" parent="Player"]
 zoom = Vector2(8, 8)
+position_smoothing_enabled = true
 
 [node name="score" parent="Player/Camera2Df" instance=ExtResource("2_r6e4h")]
 offset_left = -116.682
