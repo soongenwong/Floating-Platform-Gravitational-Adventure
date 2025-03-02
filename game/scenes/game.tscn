@@ -1,12 +1,10 @@
-[gd_scene load_steps=9 format=3 uid="uid://bjnx7v5yh2hmn"]
+[gd_scene load_steps=7 format=3 uid="uid://bjnx7v5yh2hmn"]
 
 [ext_resource type="PackedScene" uid="uid://87y1humnb1j4" path="res://scenes/player.tscn" id="1_u8hxa"]
 [ext_resource type="PackedScene" uid="uid://diqpanf0l17mx" path="res://scenes/platform.tscn" id="2_jurr8"]
 [ext_resource type="PackedScene" uid="uid://d041q4p7tarf" path="res://scenes/score.tscn" id="2_r6e4h"]
 [ext_resource type="PackedScene" uid="uid://3gccikpwen1o" path="res://scenes/spawner.tscn" id="2_x6m2a"]
 [ext_resource type="PackedScene" uid="uid://bhanswg0aefdr" path="res://scenes/killzone.tscn" id="4_ujtyr"]
-[ext_resource type="PackedScene" uid="uid://dgvn2kuhxwki3" path="res://scenes/platform_break.tscn" id="4_v0pxv"]
-[ext_resource type="PackedScene" uid="uid://b8tyy0b6h3yah" path="res://scenes/platform_move.tscn" id="6_gelmk"]
 [ext_resource type="PackedScene" uid="uid://q8jql2dilyqk" path="res://scenes/player_2.tscn" id="7_vtram"]
 
 [node name="Game" type="Node2D"]
@@ -29,14 +27,11 @@ position = Vector2(484, 476)
 [node name="platform" parent="spawner" instance=ExtResource("2_jurr8")]
 position = Vector2(0, 5)
 
-[node name="Platform_break" parent="." instance=ExtResource("4_v0pxv")]
-position = Vector2(520, 469)
+[node name="platform2" parent="spawner" instance=ExtResource("2_jurr8")]
+position = Vector2(-52, -41)
 
 [node name="killzone" parent="." instance=ExtResource("4_ujtyr")]
 position = Vector2(484, 579)
-
-[node name="Path2D" parent="." instance=ExtResource("6_gelmk")]
-position = Vector2(323, 323)
 
 [node name="Player 2" parent="." instance=ExtResource("7_vtram")]
 position = Vector2(432, 401)
