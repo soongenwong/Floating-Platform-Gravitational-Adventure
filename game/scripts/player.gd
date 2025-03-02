@@ -18,7 +18,7 @@ var dash_cooldown = 0
 # share position of player from here
 func _physics_process(delta: float) -> void:
 
-	if not is_on_floor():
+	if not is_on_floor(): 
 		velocity += get_gravity() * delta
 
 	if Input.is_action_just_pressed("ui_up") and is_on_floor():
@@ -29,12 +29,11 @@ func _physics_process(delta: float) -> void:
 		sprite.flip_h = 0
 	elif direction < 0:
 		sprite.flip_h = 1
-		
-		
+
 	if (Input.is_action_just_pressed("dash") && dashing == false && dash_cooldown <= 0):
 		dashing = true
 		dash_timer = DASH_DURATION
-		
+
 	if dashing:
 		velocity.x = direction * DASH_SPEED
 		dash_timer -= delta
@@ -45,12 +44,12 @@ func _physics_process(delta: float) -> void:
 		velocity.x = direction * SPEED
 	else:
 		velocity.x = move_toward(velocity.x, 0, SPEED)
-		
+
 	if int(-position.y + 450 > GameManager.score):
 		GameManager.update_score(-int(position.y) + 450)
 	move_and_slide()
 	dash_cooldown_time(delta)
-	
+
 func dash_cooldown_time(delta):
 	if dash_cooldown > 0:
 		dash_cooldown -= delta
