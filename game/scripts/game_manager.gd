@@ -2,7 +2,10 @@ extends Node
 
 var score: int = 0
 var score_label: Label = null
-var player: int = 1
+
+var player: int = 1 # player number
+var other_ready: bool = 1 # are all other players ready
+var is_ready: bool = 0
 
 # platform positions
 var platform_pos = []

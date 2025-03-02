@@ -3,7 +3,13 @@ extends CharacterBody2D
 
 const SPEED = 130.0
 const JUMP_VELOCITY = -500.0
-const DASH = 1000
+const DASH_SPEED = 400
+const DASH_DURATION = 0.2
+const DASH_COOLDOWN = 1
+
+var dashing = false
+var dash_timer = 0.0
+var dash_cooldown = 0
 
 @onready var sprite: Sprite2D = $Sprite2D
 
@@ -25,15 +31,26 @@ func _physics_process(delta: float) -> void:
 		sprite.flip_h = 1
 		
 		
-	if Input.is_action_just_pressed("dash"):
-		if direction:
-			velocity.x = direction * DASH
-		else:
-			velocity.x = direction * DASH
+	if (Input.is_action_just_pressed("dash") && dashing == false && dash_cooldown <= 0):
+		dashing = true
+		dash_timer = DASH_DURATION
+		
+	if dashing:
+		velocity.x = direction * DASH_SPEED
+		dash_timer -= delta
+		if dash_timer <= 0:
+			dashing = false
+			dash_cooldown = DASH_COOLDOWN
 	elif direction:
 		velocity.x = direction * SPEED
 	else:
 		velocity.x = move_toward(velocity.x, 0, SPEED)
+		
 	if int(-position.y + 450 > GameManager.score):
 		GameManager.update_score(-int(position.y) + 450)
 	move_and_slide()
+	dash_cooldown_time(delta)
+	
+func dash_cooldown_time(delta):
+	if dash_cooldown > 0:
+		dash_cooldown -= delta
