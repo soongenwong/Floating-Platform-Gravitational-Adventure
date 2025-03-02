@@ -21,4 +21,4 @@ func _process(delta: float) -> void:
 func update_score(new_score):
 	score = new_score
 	if score_label:
-		score_label.text = "Score: " + str(score)
+		score_label.text = str(score)

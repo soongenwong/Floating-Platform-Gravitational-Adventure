@@ -16,10 +16,10 @@ position = Vector2(482.682, 450.027)
 zoom = Vector2(8, 8)
 
 [node name="score" parent="Player/Camera2Df" instance=ExtResource("2_r6e4h")]
-offset_left = -116.682
-offset_top = -71.027
-offset_right = -116.682
-offset_bottom = -71.027
+offset_left = -117.682
+offset_top = -66.027
+offset_right = -117.682
+offset_bottom = -66.027
 
 [node name="spawner" parent="." instance=ExtResource("2_x6m2a")]
 position = Vector2(484, 476)
