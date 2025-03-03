@@ -1,7 +1,7 @@
 extends Node
 
 var socket = StreamPeerTCP.new()
-var server_ip = "127.0.0.1"
+var server_ip = "18.170.74.19"
 var server_port = 8080
 var local_ip = "127.0.0.1"
 var connected = false
