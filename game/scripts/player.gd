@@ -11,12 +11,23 @@ var dashing = false
 var dash_timer = 0.0
 var dash_cooldown = 0
 
+var server := StreamPeerTCP.new()
+var is_connected := false
+
+const PORT = 12000
+
 @onready var sprite: Sprite2D = $Sprite2D
+
+func _process(delta: float) -> void:
+	connect_to_server()
 
 
 # add inputs from fpga here (keep keyboard input tho)
 # share position of player from here
 func _physics_process(delta: float) -> void:
+	if is_connected and server.get_available_bytes() > 0:
+		var received_data = server.get_utf8_string(server.get_available_bytes())
+		print("Received: ", received_data)
 
 	if not is_on_floor(): 
 		velocity += get_gravity() * delta
@@ -53,3 +64,11 @@ func _physics_process(delta: float) -> void:
 func dash_cooldown_time(delta):
 	if dash_cooldown > 0:
 		dash_cooldown -= delta
+
+func connect_to_server():
+	var err = server.connect_to_host("127.0.0.1", PORT)
+	if err == OK:
+		is_connected = true
+		print("Connected to server")
+	else:
+		print("Connection failed")
