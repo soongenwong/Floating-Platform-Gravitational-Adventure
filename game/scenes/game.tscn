@@ -1,5 +1,6 @@
-[gd_scene load_steps=7 format=3 uid="uid://bjnx7v5yh2hmn"]
+[gd_scene load_steps=8 format=3 uid="uid://bjnx7v5yh2hmn"]
 
+[ext_resource type="Script" path="res://scripts/game.gd" id="1_mo4kb"]
 [ext_resource type="PackedScene" uid="uid://87y1humnb1j4" path="res://scenes/player.tscn" id="1_u8hxa"]
 [ext_resource type="PackedScene" uid="uid://diqpanf0l17mx" path="res://scenes/platform.tscn" id="2_jurr8"]
 [ext_resource type="PackedScene" uid="uid://d041q4p7tarf" path="res://scenes/score.tscn" id="2_r6e4h"]
@@ -8,9 +9,10 @@
 [ext_resource type="PackedScene" uid="uid://q8jql2dilyqk" path="res://scenes/player_2.tscn" id="7_vtram"]
 
 [node name="Game" type="Node2D"]
+script = ExtResource("1_mo4kb")
 
 [node name="Player" parent="." instance=ExtResource("1_u8hxa")]
-position = Vector2(482.682, 450.027)
+position = Vector2(970.682, 575)
 
 [node name="Camera2Df" type="Camera2D" parent="Player"]
 zoom = Vector2(8, 8)
@@ -20,18 +22,64 @@ offset_left = -117.682
 offset_top = -66.027
 offset_right = -117.682
 offset_bottom = -66.027
+metadata/_edit_use_anchors_ = true
 
 [node name="spawner" parent="." instance=ExtResource("2_x6m2a")]
-position = Vector2(484, 476)
+position = Vector2(972, 600.973)
 
 [node name="platform" parent="spawner" instance=ExtResource("2_jurr8")]
 position = Vector2(0, 5)
 
 [node name="platform2" parent="spawner" instance=ExtResource("2_jurr8")]
-position = Vector2(-52, -41)
+position = Vector2(-52, 5)
 
 [node name="killzone" parent="." instance=ExtResource("4_ujtyr")]
-position = Vector2(484, 579)
+position = Vector2(972, 703.973)
 
 [node name="Player 2" parent="." instance=ExtResource("7_vtram")]
-position = Vector2(432, 401)
+position = Vector2(919, 575.973)
+
+[node name="UI" type="CanvasLayer" parent="."]
+
+[node name="Multiplayer" type="Control" parent="UI"]
+layout_mode = 3
+anchors_preset = 15
+anchor_right = 1.0
+anchor_bottom = 1.0
+offset_left = 7.0
+offset_top = -6.0
+offset_right = 7.0
+offset_bottom = -6.0
+grow_horizontal = 2
+grow_vertical = 2
+
+[node name="Title" type="Label" parent="UI/Multiplayer"]
+layout_mode = 2
+offset_left = 501.0
+offset_top = 396.0
+offset_right = 1437.0
+offset_bottom = 533.0
+theme_override_font_sizes/font_size = 100
+text = "Choose Your Player
+"
+
+[node name="Player_1" type="Button" parent="UI/Multiplayer"]
+layout_mode = 2
+offset_left = 531.0
+offset_top = 548.0
+offset_right = 951.0
+offset_bottom = 833.0
+theme_override_font_sizes/font_size = 50
+text = "Player 1"
+
+[node name="Player_2" type="Button" parent="UI/Multiplayer"]
+layout_mode = 2
+offset_left = 973.0
+offset_top = 547.0
+offset_right = 1410.0
+offset_bottom = 832.0
+theme_override_font_sizes/font_size = 50
+text = "Player 2"
+
+[connection signal="pressed" from="UI/Multiplayer/Player_1" to="." method="_on_player_1_pressed"]
+[connection signal="pressed" from="UI/Multiplayer/Player_2" to="." method="_on_player_2_pressed"]
