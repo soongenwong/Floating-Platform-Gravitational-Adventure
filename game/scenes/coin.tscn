@@ -99,7 +99,7 @@ animations = [{
 radius = 5.0
 
 [node name="Coin" type="Area2D"]
-z_index = 1
+z_index = 2
 scale = Vector2(16, 16)
 script = ExtResource("1_n8b00")
 

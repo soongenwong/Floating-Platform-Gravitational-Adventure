@@ -51,6 +51,7 @@ _data = {
 }
 
 [node name="Path2D" type="Path2D"]
+z_index = 2
 position = Vector2(-176, -98)
 curve = SubResource("Curve2D_1qu3q")
 script = ExtResource("1_kbjwe")

@@ -1,10 +1,11 @@
-[gd_scene load_steps=8 format=3 uid="uid://bjnx7v5yh2hmn"]
+[gd_scene load_steps=9 format=3 uid="uid://bjnx7v5yh2hmn"]
 
 [ext_resource type="Script" path="res://scripts/game.gd" id="1_mo4kb"]
 [ext_resource type="PackedScene" uid="uid://87y1humnb1j4" path="res://scenes/player.tscn" id="1_u8hxa"]
 [ext_resource type="PackedScene" uid="uid://diqpanf0l17mx" path="res://scenes/platform.tscn" id="2_jurr8"]
 [ext_resource type="PackedScene" uid="uid://d041q4p7tarf" path="res://scenes/score.tscn" id="2_r6e4h"]
 [ext_resource type="PackedScene" uid="uid://3gccikpwen1o" path="res://scenes/spawner.tscn" id="2_x6m2a"]
+[ext_resource type="Texture2D" uid="uid://bsbr6arjo0w10" path="res://assets/sprites/clouds.png" id="4_h6awq"]
 [ext_resource type="PackedScene" uid="uid://bhanswg0aefdr" path="res://scenes/killzone.tscn" id="4_ujtyr"]
 [ext_resource type="PackedScene" uid="uid://q8jql2dilyqk" path="res://scenes/player_2.tscn" id="7_vtram"]
 
@@ -17,7 +18,14 @@ position = Vector2(970.682, 575)
 [node name="Camera2Df" type="Camera2D" parent="Player"]
 zoom = Vector2(8, 8)
 
+[node name="Sprite2D" type="Sprite2D" parent="Player/Camera2Df"]
+z_index = -1
+position = Vector2(3.81805, -3)
+scale = Vector2(0.365278, 0.411111)
+texture = ExtResource("4_h6awq")
+
 [node name="score" parent="Player/Camera2Df" instance=ExtResource("2_r6e4h")]
+z_index = 4
 offset_left = -117.682
 offset_top = -66.027
 offset_right = -117.682
@@ -25,6 +33,7 @@ offset_bottom = -66.027
 metadata/_edit_use_anchors_ = true
 
 [node name="spawner" parent="." instance=ExtResource("2_x6m2a")]
+z_index = 2
 position = Vector2(972, 600.973)
 
 [node name="platform" parent="spawner" instance=ExtResource("2_jurr8")]
@@ -37,11 +46,13 @@ position = Vector2(-52, 5)
 position = Vector2(972, 703.973)
 
 [node name="Player 2" parent="." instance=ExtResource("7_vtram")]
+z_index = 5
 position = Vector2(919, 575.973)
 
 [node name="UI" type="CanvasLayer" parent="."]
 
 [node name="Multiplayer" type="Control" parent="UI"]
+z_index = 4
 layout_mode = 3
 anchors_preset = 15
 anchor_right = 1.0

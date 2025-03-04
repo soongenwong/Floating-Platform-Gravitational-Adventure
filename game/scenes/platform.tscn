@@ -6,6 +6,7 @@
 size = Vector2(32, 8)
 
 [node name="platform" type="AnimatableBody2D"]
+z_index = 2
 
 [node name="Sprite2D" type="Sprite2D" parent="."]
 texture = ExtResource("1_roq4b")
