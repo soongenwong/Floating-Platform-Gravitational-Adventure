@@ -56,8 +56,8 @@ func _physics_process(delta: float) -> void:
 	else:
 		velocity.x = move_toward(velocity.x, 0, SPEED)
 
-	if int(-position.y + 450 > GameManager.score):
-		GameManager.update_score(-int(position.y) + 450)
+	#if int(-position.y + 450 > GameManager.score):
+	#	GameManager.update_score(-int(position.y) + 450)
 	move_and_slide()
 	dash_cooldown_time(delta)
 
