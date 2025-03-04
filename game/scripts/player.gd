@@ -18,10 +18,6 @@ const PORT = 12000
 
 @onready var sprite: Sprite2D = $Sprite2D
 
-func _process(delta: float) -> void:
-	connect_to_server()
-
-
 # add inputs from fpga here (keep keyboard input tho)
 # share position of player from here
 func _physics_process(delta: float) -> void:
@@ -64,11 +60,3 @@ func _physics_process(delta: float) -> void:
 func dash_cooldown_time(delta):
 	if dash_cooldown > 0:
 		dash_cooldown -= delta
-
-func connect_to_server():
-	var err = server.connect_to_host("127.0.0.1", PORT)
-	if err == OK:
-		is_connected = true
-		print("Connected to server")
-	else:
-		print("Connection failed")
