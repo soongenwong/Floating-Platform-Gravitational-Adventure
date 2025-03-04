@@ -4,11 +4,11 @@ extends Node2D
 @export var platform_break_scene: PackedScene
 @export var platform_moving_scene: PackedScene
 @export var coin_scene: PackedScene
-@export var spawn_count: int = 100
-@export var spawn_break_count: int = 25
-@export var spawn_moving_count: int = 20
+@export var spawn_count: int = 300
+@export var spawn_break_count: int = 160
+@export var spawn_moving_count: int = 120
 @export var spawn_range_x: Vector2 = Vector2(-150, 150)
-@export var spawn_range_y: Vector2 = Vector2(-1500, 0)
+@export var spawn_range_y: Vector2 = Vector2(-6000, 0)
 
 func _ready():
 	if (GameManager.player == 1):
