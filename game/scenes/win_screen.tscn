@@ -1,7 +1,11 @@
-[gd_scene load_steps=3 format=3 uid="uid://cgjax7gj8jepj"]
+[gd_scene load_steps=6 format=3 uid="uid://cgjax7gj8jepj"]
 
 [ext_resource type="Script" path="res://scripts/win_screen.gd" id="1_leiig"]
+[ext_resource type="Texture2D" uid="uid://cnc3rixt1ninb" path="res://assets/sprites/win.jpg" id="2_6u81e"]
 [ext_resource type="Script" path="res://scripts/button_text_resize.gd" id="2_jgd53"]
+[ext_resource type="PackedScene" uid="uid://87y1humnb1j4" path="res://scenes/player.tscn" id="3_4obvv"]
+
+[sub_resource type="WorldBoundaryShape2D" id="WorldBoundaryShape2D_71hkk"]
 
 [node name="win_screen" type="Control"]
 layout_mode = 3
@@ -12,20 +16,36 @@ grow_horizontal = 2
 grow_vertical = 2
 script = ExtResource("1_leiig")
 
+[node name="Sprite2D" type="Sprite2D" parent="."]
+position = Vector2(970, 532.5)
+scale = Vector2(4.07098, 5.47549)
+texture = ExtResource("2_6u81e")
+
+[node name="Player" parent="." instance=ExtResource("3_4obvv")]
+position = Vector2(1709, -279)
+scale = Vector2(5, 5)
+
 [node name="RestartButton" type="Button" parent="."]
 layout_mode = 0
-offset_left = 668.0
-offset_top = 628.0
-offset_right = 1312.0
-offset_bottom = 926.0
+offset_left = 600.0
+offset_top = 618.0
+offset_right = 1244.0
+offset_bottom = 916.0
+theme_override_font_sizes/font_size = 100
 text = "Restart"
 script = ExtResource("2_jgd53")
 
 [node name="TextEdit" type="TextEdit" parent="."]
 layout_mode = 0
-offset_left = 773.0
-offset_top = 126.0
-offset_right = 1123.0
-offset_bottom = 320.0
+offset_left = 745.0
+offset_top = 204.0
+offset_right = 1095.0
+offset_bottom = 398.0
+
+[node name="StaticBody2D" type="StaticBody2D" parent="."]
+
+[node name="CollisionShape2D" type="CollisionShape2D" parent="StaticBody2D"]
+position = Vector2(-3, 114)
+shape = SubResource("WorldBoundaryShape2D_71hkk")
 
 [connection signal="pressed" from="RestartButton" to="." method="_on_restart_button_pressed"]

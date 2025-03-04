@@ -2,16 +2,16 @@
 
 importer="texture"
 type="CompressedTexture2D"
-uid="uid://80ts0iu407pn"
-path="res://.godot/imported/pngtree-8bit-pixel-blue-sky-background-with-clouds-vector-png-image_13178306.png-56d2e0ad04ccdb460dd6a83e41373900.ctex"
+uid="uid://cnc3rixt1ninb"
+path="res://.godot/imported/win.jpg-b71b263958d69edceada13e964a1519d.ctex"
 metadata={
 "vram_texture": false
 }
 
 [deps]
 
-source_file="res://scripts/pngtree-8bit-pixel-blue-sky-background-with-clouds-vector-png-image_13178306.png"
-dest_files=["res://.godot/imported/pngtree-8bit-pixel-blue-sky-background-with-clouds-vector-png-image_13178306.png-56d2e0ad04ccdb460dd6a83e41373900.ctex"]
+source_file="res://assets/sprites/win.jpg"
+dest_files=["res://.godot/imported/win.jpg-b71b263958d69edceada13e964a1519d.ctex"]
 
 [params]
 
