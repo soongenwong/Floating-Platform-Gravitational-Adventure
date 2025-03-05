@@ -21,7 +21,7 @@ zoom = Vector2(8, 8)
 [node name="Sprite2D" type="Sprite2D" parent="Player/Camera2Df"]
 z_index = -1
 position = Vector2(3.81805, -3)
-scale = Vector2(0.365278, 0.411111)
+scale = Vector2(0.4, 0.4)
 texture = ExtResource("4_h6awq")
 
 [node name="score" parent="Player/Camera2Df" instance=ExtResource("2_r6e4h")]
