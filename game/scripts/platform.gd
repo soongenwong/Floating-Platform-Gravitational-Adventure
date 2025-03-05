@@ -16,17 +16,17 @@ func _ready():
 		spawn_break()
 		spawn_moving()
 	else:
-		for i in GameManager.platform_pos:
+		for pos in GameManager.platform_pos:
 			var platform = platform_scene.instantiate()
-			platform.position = GameManager.platform_pos[i]
+			platform.position = pos
 			add_child(platform)
-		for i in GameManager.platform_break_pos:
+		for pos in GameManager.platform_break_pos:
 			var platform_break = platform_break_scene.instantiate()
-			platform_break.position = GameManager.platform_break_pos[i]
+			platform_break.position = pos
 			add_child(platform_break)
-		for i in GameManager.platform_moving_pos:
+		for pos in GameManager.platform_moving_pos:
 			var platform_moving = platform_moving_scene.instantiate()
-			platform_moving.position = GameManager.platform_moving_pos[i]
+			platform_moving.position = pos
 			add_child(platform_moving)
 		
 		
