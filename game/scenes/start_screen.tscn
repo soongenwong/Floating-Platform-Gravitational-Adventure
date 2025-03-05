@@ -1,4 +1,4 @@
-[gd_scene load_steps=5 format=3 uid="uid://qrkmhde05bes"]
+[gd_scene load_steps=6 format=3 uid="uid://qrkmhde05bes"]
 
 [ext_resource type="Script" path="res://scripts/start_screen.gd" id="1_asv3o"]
 [ext_resource type="PackedScene" uid="uid://87y1humnb1j4" path="res://scenes/player.tscn" id="2_iysbi"]
@@ -6,6 +6,9 @@
 
 [sub_resource type="WorldBoundaryShape2D" id="WorldBoundaryShape2D_bxlcs"]
 distance = -943.0
+
+[sub_resource type="SegmentShape2D" id="SegmentShape2D_rahnj"]
+b = Vector2(0, 275)
 
 [node name="start_screen" type="Control"]
 layout_mode = 3
@@ -61,3 +64,7 @@ position = Vector2(-176, -22)
 
 [node name="CollisionShape2D" type="CollisionShape2D" parent="StaticBody2D"]
 shape = SubResource("WorldBoundaryShape2D_bxlcs")
+
+[node name="CollisionShape2D2" type="CollisionShape2D" parent="StaticBody2D"]
+position = Vector2(1156, 786)
+shape = SubResource("SegmentShape2D_rahnj")

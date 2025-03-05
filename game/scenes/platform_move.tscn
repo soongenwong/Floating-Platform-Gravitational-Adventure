@@ -3,11 +3,11 @@
 [ext_resource type="Script" path="res://scripts/platform_move.gd" id="1_kbjwe"]
 [ext_resource type="Texture2D" uid="uid://bex8psexmlebj" path="res://assets/sprites/platforms.png" id="1_wbwbo"]
 
-[sub_resource type="Curve2D" id="Curve2D_1qu3q"]
+[sub_resource type="Curve2D" id="Curve2D_nmbmk"]
 _data = {
-"points": PackedVector2Array(0, 0, 0, 0, 104, 96, 0, 0, 0, 0, 137, 96, 0, 0, 0, 0, 160, 96, 0, 0, 0, 0, 189, 96)
+"points": PackedVector2Array(0, 0, 0, 0, 108, 147, 0, 0, 0, 0, 199, 147)
 }
-point_count = 4
+point_count = 2
 
 [sub_resource type="RectangleShape2D" id="RectangleShape2D_tx06h"]
 size = Vector2(19, 7)
@@ -24,10 +24,10 @@ tracks/0/keys = {
 "times": PackedFloat32Array(0),
 "transitions": PackedFloat32Array(1),
 "update": 0,
-"values": [0.0]
+"values": [0.4416]
 }
 
-[sub_resource type="Animation" id="Animation_sq5by"]
+[sub_resource type="Animation" id="Animation_1hjgg"]
 resource_name = "move"
 length = 2.0
 loop_mode = 2
@@ -47,23 +47,23 @@ tracks/0/keys = {
 [sub_resource type="AnimationLibrary" id="AnimationLibrary_2v2sr"]
 _data = {
 "RESET": SubResource("Animation_28tb4"),
-"move": SubResource("Animation_sq5by")
+"move": SubResource("Animation_1hjgg")
 }
 
 [node name="Path2D" type="Path2D"]
 z_index = 2
 position = Vector2(-176, -98)
-curve = SubResource("Curve2D_1qu3q")
+curve = SubResource("Curve2D_nmbmk")
 script = ExtResource("1_kbjwe")
 
 [node name="PathFollow2D" type="PathFollow2D" parent="."]
-position = Vector2(104, 96)
+position = Vector2(108, 147)
 
 [node name="RemoteTransform2D" type="RemoteTransform2D" parent="PathFollow2D"]
 remote_path = NodePath("../../AnimatableBody2D")
 
 [node name="AnimatableBody2D" type="AnimatableBody2D" parent="."]
-position = Vector2(104, 96)
+position = Vector2(108, 147)
 
 [node name="Sprite2D" type="Sprite2D" parent="AnimatableBody2D"]
 position = Vector2(5.75, 0.5)

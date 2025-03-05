@@ -1,4 +1,4 @@
-[gd_scene load_steps=6 format=3 uid="uid://cgjax7gj8jepj"]
+[gd_scene load_steps=7 format=3 uid="uid://cgjax7gj8jepj"]
 
 [ext_resource type="Script" path="res://scripts/win_screen.gd" id="1_leiig"]
 [ext_resource type="Texture2D" uid="uid://cnc3rixt1ninb" path="res://assets/sprites/win.jpg" id="2_6u81e"]
@@ -6,6 +6,9 @@
 [ext_resource type="PackedScene" uid="uid://87y1humnb1j4" path="res://scenes/player.tscn" id="3_4obvv"]
 
 [sub_resource type="WorldBoundaryShape2D" id="WorldBoundaryShape2D_71hkk"]
+
+[sub_resource type="SegmentShape2D" id="SegmentShape2D_a6akp"]
+b = Vector2(0, 29)
 
 [node name="win_screen" type="Control"]
 layout_mode = 3
@@ -22,7 +25,7 @@ scale = Vector2(4.07098, 5.47549)
 texture = ExtResource("2_6u81e")
 
 [node name="Player" parent="." instance=ExtResource("3_4obvv")]
-position = Vector2(1709, -279)
+position = Vector2(1699, -306)
 scale = Vector2(5, 5)
 
 [node name="RestartButton" type="Button" parent="."]
@@ -41,11 +44,21 @@ offset_left = 745.0
 offset_top = 204.0
 offset_right = 1095.0
 offset_bottom = 398.0
+theme_override_font_sizes/font_size = 50
+placeholder_text = "You win"
 
 [node name="StaticBody2D" type="StaticBody2D" parent="."]
 
 [node name="CollisionShape2D" type="CollisionShape2D" parent="StaticBody2D"]
 position = Vector2(-3, 114)
 shape = SubResource("WorldBoundaryShape2D_71hkk")
+
+[node name="CollisionShape2D2" type="CollisionShape2D" parent="StaticBody2D"]
+position = Vector2(1682, 74)
+shape = SubResource("SegmentShape2D_a6akp")
+
+[node name="CollisionShape2D3" type="CollisionShape2D" parent="StaticBody2D"]
+position = Vector2(1732, 73)
+shape = SubResource("SegmentShape2D_a6akp")
 
 [connection signal="pressed" from="RestartButton" to="." method="_on_restart_button_pressed"]

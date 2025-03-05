@@ -96,7 +96,7 @@ animations = [{
 }]
 
 [sub_resource type="CircleShape2D" id="CircleShape2D_vpghn"]
-radius = 5.0
+radius = 2.19107
 
 [node name="Coin" type="Area2D"]
 z_index = 2
@@ -104,10 +104,13 @@ scale = Vector2(16, 16)
 script = ExtResource("1_n8b00")
 
 [node name="AnimatedSprite2D" type="AnimatedSprite2D" parent="."]
+position = Vector2(-4.76837e-07, 0.125)
+scale = Vector2(0.449219, 0.445313)
 sprite_frames = SubResource("SpriteFrames_bssbh")
 autoplay = "default"
 
 [node name="CollisionShape2D" type="CollisionShape2D" parent="."]
+position = Vector2(0.0625, 0.0625)
 shape = SubResource("CircleShape2D_vpghn")
 
 [node name="ChangeScreenTimer" type="Timer" parent="."]

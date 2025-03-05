@@ -50,6 +50,9 @@ func spawn_moving():
 		platform_moving.position = get_pos_special(i, spawn_moving_count)
 		GameManager.platform_moving_pos.append(platform_moving.position)
 		add_child(platform_moving)
+		var animation = platform_moving.get_node("AnimationPlayer")
+		var length = animation.get_animation("move").length
+		animation.seek(randf_range(0, length), true)
 
 func spawn_coin():
 	var coin = coin_scene.instantiate()
