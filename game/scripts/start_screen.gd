@@ -5,14 +5,9 @@ func _ready():
 	GameManager.platform_moving_pos = []
 	GameManager.platform_break_pos = []
 
-func _process(delta):
-	if Input.is_action_just_pressed("ui_accept"):
-		ready_game()
-		pass
-
-func _on_start_button_pressed() -> void:
+func _on_player_1_pressed() -> void:
+	GameManager.player == 1
 	ready_game()
-	pass
 
 func ready_game():
 	get_tree().change_scene_to_file("res://scenes/wait_screen.tscn")

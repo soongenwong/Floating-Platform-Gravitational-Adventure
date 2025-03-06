@@ -8,15 +8,15 @@ extends Node2D
 func _ready():
 	for pos in GameManager.platform_pos:
 		var platform = platform_scene.instantiate()
-		platform.position = pos
+		platform.position = Vector2(pos[0], pos[1])
 		add_child(platform)
 	for pos in GameManager.platform_break_pos:
 		var platform_break = platform_break_scene.instantiate()
-		platform_break.position = pos
+		platform_break.position = Vector2(pos[0], pos[1])
 		add_child(platform_break)
 	for pos in GameManager.platform_moving_pos:
 		var platform_moving = platform_moving_scene.instantiate()
-		platform_moving.position = pos
+		platform_moving.position = Vector2(pos[0], pos[1])
 		add_child(platform_moving)
 		var animation = platform_moving.get_node("AnimationPlayer")
 		var length = animation.get_animation("move").length

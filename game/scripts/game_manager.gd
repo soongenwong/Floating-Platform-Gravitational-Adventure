@@ -8,9 +8,9 @@ var other_ready: bool = 1 # are all other players ready
 var is_ready: bool = 0
 
 # platform positions
-var platform_pos = []
-var platform_break_pos = []
-var platform_moving_pos = []
+var platform_pos = [] # Table: Platforms
+var platform_break_pos = [] # Table: BreakingPlatforms
+var platform_moving_pos = [] # Table: MovingPlatforms
 
 var spawn_count: int = 290
 var spawn_break_count: int = 70

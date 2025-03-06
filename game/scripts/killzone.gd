@@ -1,7 +1,7 @@
 extends Area2D
 
 @onready var timer = $ChangeScreenTimer
-@export var speed: float = 50
+@export var speed: float = 0
 
 func _process(delta: float) -> void:
 	position.y -= speed * delta
