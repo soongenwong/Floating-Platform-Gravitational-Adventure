@@ -1,8 +1,9 @@
-[gd_scene load_steps=4 format=3 uid="uid://bggt1xytex803"]
+[gd_scene load_steps=5 format=3 uid="uid://bggt1xytex803"]
 
 [ext_resource type="Script" path="res://scripts/death_screen.gd" id="1_bcks8"]
 [ext_resource type="Script" path="res://scripts/button_text_resize.gd" id="2_ob8l0"]
 [ext_resource type="Texture2D" uid="uid://8k643q401s1l" path="res://assets/sprites/death.jpg" id="2_toixj"]
+[ext_resource type="PackedScene" uid="uid://87y1humnb1j4" path="res://scenes/player.tscn" id="4_fhiqc"]
 
 [node name="death_screen" type="Control"]
 layout_mode = 3
@@ -40,5 +41,10 @@ Skill issue
 get better
 L
 :("
+
+[node name="Player" parent="." instance=ExtResource("4_fhiqc")]
+position = Vector2(1459, -665)
+rotation = 3.14159
+scale = Vector2(5, 5)
 
 [connection signal="pressed" from="RestartButton" to="." method="_on_restart_button_pressed"]

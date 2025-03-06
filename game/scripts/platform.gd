@@ -5,8 +5,8 @@ extends Node2D
 @export var platform_moving_scene: PackedScene
 @export var coin_scene: PackedScene
 @export var spawn_count: int = 290
-@export var spawn_break_count: int = 160
-@export var spawn_moving_count: int = 120
+@export var spawn_break_count: int = 70
+@export var spawn_moving_count: int = 20
 @export var spawn_range_x: Vector2 = Vector2(-150, 150)
 @export var spawn_range_y: Vector2 = Vector2(-6000, 0)
 
@@ -63,4 +63,4 @@ func get_pos(num, count):
 	return Vector2(randf_range(spawn_range_x.x, spawn_range_x.y), spawn_range_y.x/count * num)
 
 func get_pos_special(num, count):
-	return Vector2(randf_range(spawn_range_x.x, spawn_range_x.y), (spawn_range_y.x+200)/count * num -200)
+	return Vector2(randf_range(spawn_range_x.x, spawn_range_x.y), (spawn_range_y.x+500)/count * num -500)

@@ -68,3 +68,13 @@ shape = SubResource("WorldBoundaryShape2D_bxlcs")
 [node name="CollisionShape2D2" type="CollisionShape2D" parent="StaticBody2D"]
 position = Vector2(1156, 786)
 shape = SubResource("SegmentShape2D_rahnj")
+
+[node name="Button" type="Button" parent="."]
+modulate = Color(1, 1, 1, 0)
+layout_mode = 0
+offset_left = 1249.0
+offset_top = 173.0
+offset_right = 1472.0
+offset_bottom = 382.0
+
+[connection signal="pressed" from="Button" to="." method="_on_button_pressed"]
