@@ -1,5 +1,10 @@
 extends Control
 
+func _ready():
+	GameManager.platform_pos = []
+	GameManager.platform_moving_pos = []
+	GameManager.platform_break_pos = []
+
 func _process(delta):
 	if Input.is_action_just_pressed("ui_accept"):
 		ready_game()
