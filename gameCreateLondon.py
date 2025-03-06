@@ -30,7 +30,7 @@ def create_platforms_table(tableName, dynamodb=None):
     return table
 
 if __name__ == '__main__':
-    arr = ["Platforms", "MovingPlatforms", "BreakingPlatforms"]
+    arr = ["Platforms", "MovingPlatforms", "BreakingPlatforms", "Player"]
     last_table = None
     
     for title in arr:
