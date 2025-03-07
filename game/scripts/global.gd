@@ -10,6 +10,7 @@ func _ready():
 		var error = socket.connect_to_host("18.170.218.235", 12000) # Aaditya's EC2 instance IP.
 		if error != OK:
 			print("Error connecting: " + str(error))
+			
 	
 func _process(_delta):
 	print(GameManager.player_pos.x)
@@ -40,6 +41,7 @@ func _process(_delta):
 
 func send_player_position():
 	var position_data = {
+		"player_id": GameManager.player_id,
 		"player_x": GameManager.player_pos.x,
 		"player_y": GameManager.player_pos.y
 	}

@@ -78,4 +78,5 @@ offset_right = 1472.0
 offset_bottom = 382.0
 
 [connection signal="pressed" from="Player_1" to="." method="_on_player_1_pressed"]
+[connection signal="pressed" from="Player_2" to="." method="_on_player_2_pressed"]
 [connection signal="pressed" from="Button" to="." method="_on_button_pressed"]

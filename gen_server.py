@@ -91,7 +91,7 @@ print('Server running on port', server_port)
 
 connection_socket, caddr = welcome_socket.accept()
 while True:
-    print(f"Client connected: {c        addr}")
+    # print(f"Client connected: {caddr}")
 
     # Convert platform data to JSON and send to Godot
     json_data = json.dumps(platform_data)
