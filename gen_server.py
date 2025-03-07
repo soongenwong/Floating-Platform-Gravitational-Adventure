@@ -89,14 +89,19 @@ welcome_socket.listen(2)
 
 print('Server running on port', server_port)
 
+connection_socket, caddr = welcome_socket.accept()
 while True:
-    connection_socket, caddr = welcome_socket.accept()
-    print(f"Client connected: {caddr}")
+    print(f"Client connected: {c        addr}")
 
     # Convert platform data to JSON and send to Godot
     json_data = json.dumps(platform_data)
     connection_socket.sendall(json_data.encode('utf-8'))
-    print("Data sent to client:", json_data)
+    # print("Data sent to client:", json_data)
 
+    #notice recv and send instead of recvto and sendto
+    cmsg = connection_socket.recv(1024)
+    cmsg = cmsg.decode()
+    print(f"Received from client: {cmsg}")
+    connection_socket.send(cmsg.encode())
     # Close connection after sending data
-    connection_socket.close()
+    # connection_socket.close()
