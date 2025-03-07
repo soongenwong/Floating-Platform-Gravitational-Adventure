@@ -2,9 +2,6 @@ extends Node
 
 var winner_text = ""
 var buffer = ""
-var boolb = 1
-var all_spawned = 0
-
 
 var socket = StreamPeerTCP.new()
 func _ready():
@@ -15,6 +12,9 @@ func _ready():
 			print("Error connecting: " + str(error))
 	
 func _process(_delta):
+	print(GameManager.player_pos.x)
+	print(GameManager.player_pos.y)
+	send_player_position()
 	socket.poll()
 
 	var status = socket.get_status()
@@ -37,6 +37,16 @@ func _process(_delta):
 					print("Received malformed JSON data")
 			else:
 				print("JSON parsing error: ", json.get_error_message())
+
+func send_player_position():
+	var position_data = {
+		"player_x": GameManager.player_pos.x,
+		"player_y": GameManager.player_pos.y
+	}
+	var json = JSON.new()
+	var json_string = json.stringify(position_data)
+	
+	socket.put_string(json_string + "\n") # Send data as JSON string
 
 func _exit_tree():
 	socket.disconnect_from_host()

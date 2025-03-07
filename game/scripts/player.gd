@@ -21,6 +21,7 @@ const PORT = 12000
 # add inputs from fpga here (keep keyboard input tho)
 # share position of player from here
 func _physics_process(delta: float) -> void:
+	GameManager.player_pos = position
 	if is_connected and server.get_available_bytes() > 0:
 		var received_data = server.get_utf8_string(server.get_available_bytes())
 		print("Received: ", received_data)
@@ -51,7 +52,7 @@ func _physics_process(delta: float) -> void:
 		velocity.x = direction * SPEED
 	else:
 		velocity.x = move_toward(velocity.x, 0, SPEED)
-
+	#print(position)
 	#if int(-position.y + 450 > GameManager.score):
 	#	GameManager.update_score(-int(position.y) + 450)
 	move_and_slide()
