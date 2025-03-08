@@ -3,6 +3,8 @@ extends Node
 var winner_text = ""
 var buffer = ""
 var other_player_nodes = {}
+var last_update_time = 0
+var update_frequency = 0.05
 
 var socket = StreamPeerTCP.new()
 func _ready():
@@ -17,6 +19,12 @@ func _process(_delta):
 	print(GameManager.player_pos.x)
 	print(GameManager.player_pos.y)
 	send_player_position()
+
+    last_update_time += delta
+    if last_update_time >= update_frequency:
+        send_player_position()
+        last_update_time = 0
+        
 	socket.poll()
 
 	var status = socket.get_status()
@@ -31,14 +39,22 @@ func _process(_delta):
 			var parse_result = json.parse(buffer)
 
 			if parse_result == OK:
-				var parsed_data = json.get_data()
-				if parsed_data is Dictionary:
-					load_platform_data(parsed_data)  # Call function to load data
-					buffer = ""  # Reset buffer after successful parsing
-				else:
-					print("Received malformed JSON data")
-			else:
-				print("JSON parsing error: ", json.get_error_message())
+                var parsed_data = json.get_data()
+                if parsed_data is Dictionary:
+                    if parsed_data.has("type"):
+                        # Handle different message types
+                        if parsed_data["type"] == "platform_data":
+                            load_platform_data(parsed_data)
+                        elif parsed_data["type"] == "player_positions":
+                            update_other_players(parsed_data["players"])
+                        elif parsed_data["type"] == "player_disconnected":
+                            remove_player(parsed_data["player_id"])
+                    else:
+                        # For backward compatibility with existing code
+                        load_platform_data(parsed_data)
+                    buffer = ""
+                else:
+                    print("Received malformed JSON data")
 
 func send_player_position():
 	var position_data = {
