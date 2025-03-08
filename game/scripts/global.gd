@@ -2,6 +2,9 @@ extends Node
 
 var winner_text = ""
 var buffer = ""
+var boolb = 1
+var all_spawned = 0
+
 
 var socket = StreamPeerTCP.new()
 func _ready():
@@ -10,13 +13,11 @@ func _ready():
 		var error = socket.connect_to_host("18.170.218.235", 12000) # Aaditya's EC2 instance IP.
 		if error != OK:
 			print("Error connecting: " + str(error))
-			
 	
 func _process(_delta):
-	print(GameManager.player_pos.x)
-	print(GameManager.player_pos.y)
-	send_player_position()
 	socket.poll()
+	send_position()
+	#print(GameManager.player_pos)
 
 	var status = socket.get_status()
 	if status == StreamPeerTCP.STATUS_CONNECTED:
@@ -38,23 +39,24 @@ func _process(_delta):
 					print("Received malformed JSON data")
 			else:
 				print("JSON parsing error: ", json.get_error_message())
+		else:
+			print("no data receieved")
 
-func send_player_position():
+func send_position():
 	var position_data = {
-		"player_id": GameManager.player_id,
-		"player_x": GameManager.player_pos.x,
-		"player_y": GameManager.player_pos.y
+		"id" : GameManager.player_id,
+		"xpos" : GameManager.player_pos.x,
+		"ypos" : GameManager.player_pos.y,
 	}
 	var json = JSON.new()
-	var json_string = json.stringify(position_data)
-	
-	socket.put_string(json_string + "\n") # Send data as JSON string
+	var json_string = json.stringify(position_data) + "\n"
+	socket.put_data(json_string.to_utf8_buffer())
 
 func _exit_tree():
 	socket.disconnect_from_host()
 
 func load_platform_data(parsed_data):
-	print("Received platform data: ", parsed_data)
+	#print("Received platform data: ", parsed_data)
 
 	# Load data into GameManager arrays
 	if parsed_data.has("Platforms"):

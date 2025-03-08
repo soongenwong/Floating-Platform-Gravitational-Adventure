@@ -3,7 +3,7 @@ import time
 
 def create_platforms_table(tableName, dynamodb=None):
     if not dynamodb:
-        dynamodb = boto3.resource('dynamodb', region_name='eu-west-2')
+        dynamodb = boto3.resource('dynamodb', region_name='us-east-1')
     
     # Use the tableName parameter here instead of hardcoded 'Platforms'
     table = dynamodb.create_table(

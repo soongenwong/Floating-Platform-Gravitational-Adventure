@@ -52,7 +52,7 @@ func _physics_process(delta: float) -> void:
 		velocity.x = direction * SPEED
 	else:
 		velocity.x = move_toward(velocity.x, 0, SPEED)
-	#print(position)
+
 	#if int(-position.y + 450 > GameManager.score):
 	#	GameManager.update_score(-int(position.y) + 450)
 	move_and_slide()

@@ -3,6 +3,7 @@ import boto3
 import json
 import random
 from decimal import Decimal
+import threading
 
 # AWS DynamoDB setup
 def add_platform_data(table_name, platform_id, xpos, ypos, dynamodb=None):
@@ -82,26 +83,70 @@ for xpos, ypos in moving_platform_positions:
     platform_data["MovingPlatforms"].append([xpos, ypos])
     moving_platform_id += 1
 
-# Start server
+
+# Start server - KEEP THESE LINES!
 welcome_socket = socket.socket(socket.AF_INET, socket.SOCK_STREAM)
 welcome_socket.bind(('0.0.0.0', server_port))
 welcome_socket.listen(2)
 
+# At the top of your script, add:
+
 print('Server running on port', server_port)
+print('Waiting for 2 clients to connect...')
+# Accept first client
+client1, addr1 = welcome_socket.accept()
+print(f"Client 1 connected: {addr1}")
 
-connection_socket, caddr = welcome_socket.accept()
-while True:
-    # print(f"Client connected: {caddr}")
+# Send platform data to first client with proper termination
+json_data = json.dumps(platform_data)
+client1.sendall((json_data + "\n").encode('utf-8'))  # Add newline delimiter
+print("Sent platform data to client 1")
 
-    # Convert platform data to JSON and send to Godot
-    json_data = json.dumps(platform_data)
-    connection_socket.sendall(json_data.encode('utf-8'))
-    # print("Data sent to client:", json_data)
+# Accept second client
+client2, addr2 = welcome_socket.accept()
+print(f"Client 2 connected: {addr2}")
 
-    #notice recv and send instead of recvto and sendto
-    cmsg = connection_socket.recv(1024)
-    cmsg = cmsg.decode()
-    print(f"Received from client: {cmsg}")
-    connection_socket.send(cmsg.encode())
-    # Close connection after sending data
-    # connection_socket.close()
+# Send platform data to second client with proper termination
+client2.sendall((json_data + "\n").encode('utf-8'))  # Add newline delimiter
+print("Sent platform data to client 2")
+
+# Function to handle a client
+def handle_client(client_socket, client_num, other_client):
+    try:
+        while True:
+            cmsg = client_socket.recv(1024)
+            if not cmsg:
+                break
+            
+            cmsg_str = cmsg.decode()
+            print(f"Received from client {client_num}: {cmsg_str}")
+            
+            # Forward position data to the other client
+            try:
+                # Add client ID to the message
+                position_data = json.loads(cmsg_str)
+                position_data["player_id"] = client_num
+                other_client.sendall(json.dumps(position_data).encode('utf-8'))
+            except Exception as e:
+                print(f"Error forwarding data: {e}")
+    except Exception as e:
+        print(f"Error with client {client_num}: {e}")
+    finally:
+        client_socket.close()
+        print(f"Client {client_num} disconnected")
+
+# Start two threads to handle both clients
+thread1 = threading.Thread(target=handle_client, args=(client1, 1, client2))
+thread2 = threading.Thread(target=handle_client, args=(client2, 2, client1))
+
+thread1.daemon = True
+thread2.daemon = True
+
+thread1.start()
+thread2.start()
+
+# Wait for both threads to finish (clients to disconnect)
+thread1.join()
+thread2.join()
+
+print("Both clients disconnected. Server shutting down.")

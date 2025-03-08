@@ -2,13 +2,12 @@ extends Node
 
 var score: int = 0
 var score_label: Label = null
-var player_pos: Vector2 = Vector2()
 
-var player: bool = 1 # player number
+var player: int = 1 # player number
 var player_id: int = 0
 var other_ready: bool = 1 # are all other players ready
 var is_ready: bool = 0
-
+var player_pos: Vector2 = Vector2()
 # platform positions
 var platform_pos = [] # Table: Platforms
 var platform_break_pos = [] # Table: BreakingPlatforms
@@ -24,7 +23,6 @@ func _ready() -> void:
 	pass
 
 func _process(delta: float) -> void:
-
 	pass
 
 func update_score(new_score):
