@@ -119,6 +119,7 @@ def handle_client(client_socket, client_num, other_client):
                 break
             
             cmsg_str = cmsg.decode()
+            print(type(cmsg_str))
             print(f"Received from client {client_num}: {cmsg_str}")
             
             # Forward position data to the other client

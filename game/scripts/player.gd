@@ -21,6 +21,7 @@ const PORT = 12000
 # add inputs from fpga here (keep keyboard input tho)
 # share position of player from here
 func _physics_process(delta: float) -> void:
+	#print("my position: ", position)
 	GameManager.player_pos = position
 	if is_connected and server.get_available_bytes() > 0:
 		var received_data = server.get_utf8_string(server.get_available_bytes())

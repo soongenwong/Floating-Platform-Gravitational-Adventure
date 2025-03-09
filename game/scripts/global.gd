@@ -2,10 +2,8 @@ extends Node
 
 var winner_text = ""
 var buffer = ""
-var boolb = 1
-var all_spawned = 0
-
-
+var closing_bracket: bool = 0
+	
 var socket = StreamPeerTCP.new()
 func _ready():
 	if GameManager.player:
@@ -21,26 +19,42 @@ func _process(_delta):
 
 	var status = socket.get_status()
 	if status == StreamPeerTCP.STATUS_CONNECTED:
-		var received_data = socket.get_available_bytes()
-		if received_data > 0:
-			var raw_data = socket.get_string(received_data)  # Read full incoming message
-			buffer += raw_data  # Append to buffer in case of fragmentation
+		#print("connected")
+		#print("GameManager.platforms_loaded: ", GameManager.platforms_loaded)
+		if not GameManager.platforms_loaded:
+			var received_data = socket.get_available_bytes()
+			#print("received_data: ", received_data)
+			if received_data > 0:
+				var raw_data = socket.get_string(received_data)  # Read full incoming message
+				#print("raw: ", raw_data)
+				buffer += raw_data  # Append to buffer in case of fragmentation
 
-			# Try parsing JSON
-			var json = JSON.new()
-			var parse_result = json.parse(buffer)
-
-			if parse_result == OK:
-				var parsed_data = json.get_data()
-				if parsed_data is Dictionary:
-					load_platform_data(parsed_data)  # Call function to load data
-					buffer = ""  # Reset buffer after successful parsing
-				else:
-					print("Received malformed JSON data")
-			else:
-				print("JSON parsing error: ", json.get_error_message())
+				# Try parsing JSON
+				var json = JSON.new()
+				var parse_result = json.parse(buffer)
+				if parse_result == OK:
+					#print("OK")
+					var parsed_data = json.get_data()
+					print("parsed_data: ", parsed_data)
+					if parsed_data is Dictionary:
+						load_platform_data(parsed_data)  # Call function to load data
+						buffer = ""  # Reset buffer after successful parsing
+						GameManager.platforms_loaded = 1
+					else:
+						print("Received malformed JSON data")
+				#else:
+					#print("JSON parsing error: ", json.get_error_message())
 		else:
-			print("no data receieved")
+			if socket.get_available_bytes() > 0:
+				# Read the data
+				var data = socket.get_data(socket.get_available_bytes())
+				if data[0] == OK:
+					# Print the received data
+					var received_data = data[1].get_string_from_utf8()
+					GameManager.other_player_pos = string_to_vector2(received_data)
+					print("my pos: ", GameManager.player_pos)
+					print("other pos: ", GameManager.other_player_pos)
+					#print("Received data: " + received_data)
 
 func send_position():
 	var position_data = {
@@ -67,3 +81,9 @@ func load_platform_data(parsed_data):
 		GameManager.platform_moving_pos = parsed_data["MovingPlatforms"]
 
 	print("Platform data loaded successfully!")
+	
+func string_to_vector2(input: String) -> Vector2:
+	var parts = input.split(" ")
+	var x = float(parts[0])
+	var y = float(parts[1])
+	return Vector2(x, y)
