@@ -24,7 +24,9 @@ func _ready() -> void:
 	pass
 
 func _process(delta: float) -> void:
-	pass
+	print("my pos: ", player_pos)
+	print("other pos: ", other_player_pos)
+	#pass
 
 func update_score(new_score):
 	score = new_score
