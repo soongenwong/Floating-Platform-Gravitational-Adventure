@@ -4,6 +4,7 @@ import json
 import random
 from decimal import Decimal
 import threading
+import time
 
 # AWS DynamoDB setup
 def add_platform_data(table_name, platform_id, xpos, ypos, dynamodb=None):
@@ -38,6 +39,15 @@ def generate_special_positions(count, range_x, range_y):
         ypos = ((range_y[0] + 500) / count) * i - 500  # Adjusted for special platforms
         positions.append([xpos, ypos])
     return positions
+
+def extract_values(cmsg_str):
+    try:
+        # Extract the first valid JSON part
+        first_json_str = cmsg_str.split("\n")[0].split(": ", 1)[-1]  # Handles prefix like "Received from client X: "
+        data = json.loads(first_json_str)  # Convert string to dictionary
+        return data.get("id"), data.get("xpos"), data.get("ypos")
+    except (json.JSONDecodeError, KeyError, IndexError):
+        return None, None, None  # Return None values if parsing fails
 
 print("We're in TCP server...")
 
@@ -119,23 +129,19 @@ def handle_client(client_socket, client_num, other_client):
                 break
             
             cmsg_str = cmsg.decode()
-            print(type(cmsg_str))
-            print(f"Received from client {client_num}: {cmsg_str}")
-            
-            # Forward position data to the other client
-            try:
-                # Add client ID to the message
-                position_data = json.loads(cmsg_str)
-                position_data["player_id"] = client_num
-                other_client.sendall(json.dumps(position_data).encode('utf-8'))
-            except Exception as e:
-                print(f"Error forwarding data: {e}")
+            jsoned = extract_values(cmsg_str)
+            if len(jsoned) == 3 and jsoned[0] != None:
+                print(f"Received from client {client_num}: {jsoned}")
+                other_client.sendall((str(jsoned[1]) + " " + str(jsoned[2])).encode())
+
     except Exception as e:
         print(f"Error with client {client_num}: {e}")
     finally:
         client_socket.close()
         print(f"Client {client_num} disconnected")
-
+print("start sleep")
+time.sleep(3)
+print("finished sleep")
 # Start two threads to handle both clients
 thread1 = threading.Thread(target=handle_client, args=(client1, 1, client2))
 thread2 = threading.Thread(target=handle_client, args=(client2, 2, client1))
