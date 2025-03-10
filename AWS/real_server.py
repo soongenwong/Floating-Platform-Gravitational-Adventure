@@ -26,7 +26,10 @@ def add_platform_data(table_name, platform_id, xpos, ypos, dynamodb=None):
 # Function to generate platform positions
 def generate_positions(count, range_x, range_y):
     positions = []
-    for i in range(count):
+    for i in range(0, count, 2):
+        xpos = random.uniform(range_x[0], range_x[1])
+        ypos = (range_y[0] / count) * i  # Mimicking Godot's logic
+        positions.append([xpos, ypos])
         xpos = random.uniform(range_x[0], range_x[1])
         ypos = (range_y[0] / count) * i  # Mimicking Godot's logic
         positions.append([xpos, ypos])
