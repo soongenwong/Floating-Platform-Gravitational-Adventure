@@ -52,9 +52,11 @@ func _process(_delta):
 					# Print the received data
 					var received_data = data[1].get_string_from_utf8()
 					GameManager.other_player_pos = string_to_vector2(received_data)
+					var got_id = get_id_0(received_data)
+					GameManager.other_id = got_id
 					GameManager.other_ready = true
-					print("my pos: ", GameManager.player_pos)
-					print("other pos: ", GameManager.other_player_pos)
+					print("other pos: id=", got_id, " ", GameManager.other_player_pos)
+					print("my pos: id=", GameManager.player_id, " ", GameManager.player_pos)
 					#print("Received data: " + received_data)
 
 func send_position():
@@ -85,6 +87,10 @@ func load_platform_data(parsed_data):
 	
 func string_to_vector2(input: String) -> Vector2:
 	var parts = input.split(" ")
-	var x = float(parts[0])
-	var y = float(parts[1])
+	var x = float(parts[1])
+	var y = float(parts[2])
 	return Vector2(x, y)
+
+func get_id_0(input: String) -> int:
+	var parts = input.split(" ")
+	return int(parts[0])

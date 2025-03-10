@@ -1,4 +1,4 @@
-[gd_scene load_steps=4 format=3 uid="uid://bpiysvldaxdpl"]
+[gd_scene load_steps=4 format=3 uid="uid://bcu22lt3kvkd8"]
 
 [ext_resource type="Script" path="res://scripts/generate_platforms.gd" id="1_htfel"]
 [ext_resource type="Texture2D" uid="uid://f8xlo7v7bl7t" path="res://assets/sprites/mountain.jpg" id="2_lrwxp"]
