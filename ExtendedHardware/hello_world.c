@@ -89,7 +89,7 @@ int main() {
     while (1) {
     	//led_write(led << 1);
         alt_up_accelerometer_spi_read_x_axis(acc_dev, & x_read);
-        alt_printf("x data: %x\n", x_read);
+        //alt_printf("x data: %x\n", x_read);
         movement = x_read; //convert_read(x_read, & level, & led);
 
         /*if (x_read > 0x30){
