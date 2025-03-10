@@ -8,10 +8,10 @@ var player2_score = 0
 
 # Call this when the game ends
 func show_scoreboard():
-    var scoreboard = scoreboard_scene.instance()
-    scoreboard.set_scores(player1_score, player2_score)
-    scoreboard.connect("restart_game", self, "_on_restart_game")
-    add_child(scoreboard)
+	var scoreboard = scoreboard_scene.instance()
+	scoreboard.set_scores(player1_score, player2_score)
+	scoreboard.connect("restart_game", self, "_on_restart_game")
+	add_child(scoreboard)
 
 func _ready():
 	text_edit.text = Global.winner_text

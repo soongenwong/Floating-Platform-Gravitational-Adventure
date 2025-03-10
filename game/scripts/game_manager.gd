@@ -21,7 +21,7 @@ var spawn_moving_count: int = 20
 var spawn_range_x: Vector2 = Vector2(-150, 150)
 var spawn_range_y: Vector2 = Vector2(-4000, 0)
 # References to scenes
-var scoreboard_scene = preload("res://scoreboard.tscn")
+#var scoreboard_scene = preload("res://scoreboard.tscn")
 var current_scoreboard = null
 
 func _ready() -> void:
