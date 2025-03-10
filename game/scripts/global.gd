@@ -55,8 +55,8 @@ func _process(_delta):
 					var got_id = get_id_0(received_data)
 					GameManager.other_id = got_id
 					GameManager.other_ready = true
-					print("other pos: id=", got_id, " ", GameManager.other_player_pos)
-					print("my pos: id=", GameManager.player_id, " ", GameManager.player_pos)
+					#print("other pos: id=", got_id, " ", GameManager.other_player_pos)
+					#print("my pos: id=", GameManager.player_id, " ", GameManager.player_pos)
 					#print("Received data: " + received_data)
 
 func send_position():
