@@ -139,7 +139,7 @@ int main() {
 
         //result = result << 1;
 
-        alt_printf(" speed: %x\n", result, 0);
+        alt_printf(" speed: %x\n", result);
 
         /*
         movement = convert_read(x_read, & level, & led);
