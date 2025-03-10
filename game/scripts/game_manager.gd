@@ -10,6 +10,14 @@ var other_ready: bool = false # are all other players ready
 var is_ready: bool = 0
 var player_pos: Vector2 = Vector2()
 var other_player_pos: Vector2 = Vector2()
+
+# Player scores
+var player1_score: int = 0
+var player2_score: int = 0
+var player1_name: String = "Player 1"
+var player2_name: String = "Player 2"
+var game_active: bool = false
+
 # platform positions
 var platform_pos = [] # Table: Platforms
 var platform_break_pos = [] # Table: BreakingPlatforms
@@ -20,6 +28,9 @@ var spawn_break_count: int = 70
 var spawn_moving_count: int = 20
 var spawn_range_x: Vector2 = Vector2(-150, 150)
 var spawn_range_y: Vector2 = Vector2(-4000, 0)
+# References to scenes
+var scoreboard_scene = preload("res://scoreboard.tscn")
+var current_scoreboard = null
 
 func _ready() -> void:
 	pass
