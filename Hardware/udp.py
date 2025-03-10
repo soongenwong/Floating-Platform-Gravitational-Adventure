@@ -20,26 +20,24 @@ print("Sending data to Godot via UDP at 127.0.0.1:9000...")
 def parse_new_format(data_str):
     try:
         # Extract direction
-        direction_match = re.search(r'direction: (right|left|centre)', data_str)
+        direction_match = re.search(r'direction:\s*(left|right)', data_str)
         direction = direction_match.group(1) if direction_match else "centre"
         
-        # Extract speed
-        speed_match = re.search(r'speed: (fast|medium|still)', data_str)
-        speed = speed_match.group(1) if speed_match else "still"
+        # Extract speed as an integer
+        speed_match = re.search(r'speed:\s*(\d+)', data_str)
+        speed = int(speed_match.group(1)) if speed_match else 0  # Default to 0 if not found
         
-        # Check for dashing
+        # Detect dashing and jumping
         dashing = "dashing" if "dashing" in data_str else "nope"
-        
-        # Check for jumping
         jumping = "jumping" if "jumping" in data_str else "hellnah"
         
-        # Format the output string
+        # Format output string
         classification = f"{direction} + {speed} + {dashing} + {jumping}"
         return classification
-    
+
     except Exception as e:
         print(f"Error in parse_new_format: {e}")
-        return "centre + still + nope + hellnah"
+        return "centre + 0 + nope + hellnah"
 
 try:
     while True:
@@ -47,7 +45,7 @@ try:
         fpga_out = ju.read()
         if len(fpga_out) > 3:
             try:
-                data_str = fpga_out.decode('utf-8', errors='ignore')
+                data_str = fpga_out.decode('utf-8', errors='ignore').strip()
                 
                 # Use the new parsing function
                 classification = parse_new_format(data_str)
