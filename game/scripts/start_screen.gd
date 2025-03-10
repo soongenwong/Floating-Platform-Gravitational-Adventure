@@ -12,7 +12,7 @@ func _on_player_1_pressed() -> void:
 	ready_game()
 
 func _on_player_2_pressed() -> void:
-	GameManager.player = 1
+	GameManager.player = 2
 	GameManager.is_ready = true
 	# this is to check which project im on.
 	# another check.

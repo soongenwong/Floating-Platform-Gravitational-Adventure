@@ -8,13 +8,13 @@ var player_id: int = 0
 var other_id: int = 0
 var other_ready: bool = false # are all other players ready
 var is_ready: bool = 0
-var player_pos: Vector2 = Vector2()
-var other_player_pos: Vector2 = Vector2()
+var player_pos: Vector2
+var other_player_pos: Vector2 = Vector2(919, 575)
 # platform positions
 var platform_pos = [] # Table: Platforms
 var platform_break_pos = [] # Table: BreakingPlatforms
 var platform_moving_pos = [] # Table: MovingPlatforms
-var platforms_loaded: bool = 0
+var platforms_loaded: bool = false
 var spawn_count: int = 290
 var spawn_break_count: int = 70
 var spawn_moving_count: int = 20

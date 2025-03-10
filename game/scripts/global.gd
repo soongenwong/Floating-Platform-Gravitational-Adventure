@@ -35,7 +35,7 @@ func _process(_delta):
 				if parse_result == OK:
 					#print("OK")
 					var parsed_data = json.get_data()
-					print("parsed_data: ", parsed_data)
+					#print("parsed_data: ", parsed_data)
 					if parsed_data is Dictionary:
 						load_platform_data(parsed_data)  # Call function to load data
 						buffer = ""  # Reset buffer after successful parsing
@@ -83,7 +83,7 @@ func load_platform_data(parsed_data):
 	if parsed_data.has("MovingPlatforms"):
 		GameManager.platform_moving_pos = parsed_data["MovingPlatforms"]
 
-	print("Platform data loaded successfully!")
+	#print("Platform data loaded successfully!")
 	
 func string_to_vector2(input: String) -> Vector2:
 	var parts = input.split(" ")

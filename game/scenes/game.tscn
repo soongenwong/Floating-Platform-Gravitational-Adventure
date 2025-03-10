@@ -26,10 +26,15 @@ texture = ExtResource("4_h6awq")
 
 [node name="score" parent="Player/Camera2Df" instance=ExtResource("2_r6e4h")]
 z_index = 4
-offset_left = -117.682
-offset_top = -66.0
-offset_right = -117.682
-offset_bottom = -66.0
+anchors_preset = 0
+anchor_right = 0.0
+anchor_bottom = 0.0
+offset_left = -109.682
+offset_top = -64.0
+offset_right = -109.682
+offset_bottom = -64.0
+grow_horizontal = 1
+grow_vertical = 1
 metadata/_edit_use_anchors_ = true
 
 [node name="spawner" parent="." instance=ExtResource("2_x6m2a")]
@@ -40,11 +45,14 @@ position = Vector2(972, 600.973)
 position = Vector2(0, 5)
 
 [node name="platform2" parent="spawner" instance=ExtResource("2_jurr8")]
-position = Vector2(-52, 5)
+position = Vector2(-32, 5.02698)
+
+[node name="platform3" parent="spawner" instance=ExtResource("2_jurr8")]
+position = Vector2(32, 5.02698)
 
 [node name="killzone" parent="." instance=ExtResource("4_ujtyr")]
-position = Vector2(972, 703.973)
+position = Vector2(972, 1000)
 
 [node name="Player 2" parent="." instance=ExtResource("7_vtram")]
 z_index = 5
-position = Vector2(919, 575.973)
+position = Vector2(935, 573)

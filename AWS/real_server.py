@@ -61,7 +61,7 @@ print("We're in TCP server...")
 server_port = 12000
 spawn_count = 290
 spawn_break_count = 70
-spawn_moving_count = 20
+spawn_moving_count = 30
 spawn_range_x = (-150, 150)  # Example range, adjust as needed
 spawn_range_y = (-4000, 0)    # Example range, adjust as needed
 
