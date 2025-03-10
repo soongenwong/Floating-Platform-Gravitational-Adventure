@@ -45,8 +45,8 @@ offset_top = 237.0
 offset_right = 1673.0
 offset_bottom = 431.0
 theme_override_font_sizes/font_size = 50
-placeholder_text = "You win 
-Scoreboard | Player 1: 0    Player 2: 0"
+placeholder_text = "You Win! 
+All time fastest win: 0 seconds"
 
 [node name="StaticBody2D" type="StaticBody2D" parent="."]
 
