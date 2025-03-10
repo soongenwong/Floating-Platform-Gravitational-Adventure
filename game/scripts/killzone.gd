@@ -1,11 +1,11 @@
 extends Area2D
 
 @onready var timer = $ChangeScreenTimer
-@export var speed: float = 0
+@export var speed: float = 50
 
 func _process(delta: float) -> void:
 	position.y -= speed * delta
-	speed = delta/4 + speed
+	speed = delta/5 + speed
 
 func _on_body_entered(body: Node2D) -> void:
 	if body.is_in_group("Player"):

@@ -6,13 +6,13 @@ func _on_body_entered(body: Node2D) -> void:
 	if body.is_in_group("Player"):
 		# here send message aws saying this player won
 		#print("Player 1 wins")
-		Global.winner_text = "Player 1 wins:\nTime - "  + str(GameManager.score) 
+		Global.winner_text = "You Win:\nTime - "  + str(GameManager.score) 
 		timer.start()
 	pass
 	
 	if body.is_in_group("Player_2"):
 		#print("Player 2 wins")
-		Global.winner_text = "Player 2 wins:\nTime - " + str(GameManager.score)
+		Global.winner_text = "The other guy was better:\nTime - " + str(GameManager.score)
 		timer.start()
 	pass
 
