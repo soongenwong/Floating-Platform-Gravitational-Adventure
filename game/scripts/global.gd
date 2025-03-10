@@ -52,6 +52,7 @@ func _process(_delta):
 					# Print the received data
 					var received_data = data[1].get_string_from_utf8()
 					GameManager.other_player_pos = string_to_vector2(received_data)
+					GameManager.other_ready = true
 					print("my pos: ", GameManager.player_pos)
 					print("other pos: ", GameManager.other_player_pos)
 					#print("Received data: " + received_data)

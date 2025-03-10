@@ -5,7 +5,7 @@ var score_label: Label = null
 
 var player: int = 1 # player number
 var player_id: int = 0
-var other_ready: bool = 1 # are all other players ready
+var other_ready: bool = false # are all other players ready
 var is_ready: bool = 0
 var player_pos: Vector2 = Vector2()
 var other_player_pos: Vector2 = Vector2()
