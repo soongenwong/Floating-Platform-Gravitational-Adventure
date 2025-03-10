@@ -42,13 +42,22 @@ z_index = 2
 position = Vector2(972, 600.973)
 
 [node name="platform" parent="spawner" instance=ExtResource("2_jurr8")]
-position = Vector2(0, 5)
+position = Vector2(-1, 24.027)
+
+[node name="platform4" parent="spawner" instance=ExtResource("2_jurr8")]
+position = Vector2(0, -11.973)
 
 [node name="platform2" parent="spawner" instance=ExtResource("2_jurr8")]
-position = Vector2(-32, 5.02698)
+position = Vector2(-33, 24.027)
 
 [node name="platform3" parent="spawner" instance=ExtResource("2_jurr8")]
-position = Vector2(32, 5.02698)
+position = Vector2(31, 24.027)
+
+[node name="platform5" parent="spawner" instance=ExtResource("2_jurr8")]
+position = Vector2(32, -11.973)
+
+[node name="platform6" parent="spawner" instance=ExtResource("2_jurr8")]
+position = Vector2(-32, -11.973)
 
 [node name="killzone" parent="." instance=ExtResource("4_ujtyr")]
 position = Vector2(972, 1000)
