@@ -40,21 +40,13 @@ script = ExtResource("2_jgd53")
 
 [node name="TextEdit" type="TextEdit" parent="."]
 layout_mode = 0
-offset_left = 245.0
-offset_top = 204.0
-offset_right = 1595.0
-offset_bottom = 398.0
+offset_left = 323.0
+offset_top = 237.0
+offset_right = 1673.0
+offset_bottom = 431.0
 theme_override_font_sizes/font_size = 50
-placeholder_text = "You win"
-
-[node name="Scoreboard" type="TextEdit" parent="."]
-layout_mode = 0
-offset_left = 1245.0
-offset_top = 204.0
-offset_right = 595.0
-offset_bottom = 398.0
-theme_override_font_sizes/font_size = 50
-placeholder_text = "Scoreboard"
+placeholder_text = "You win 
+Scoreboard | Player 1: 0    Player 2: 0"
 
 [node name="StaticBody2D" type="StaticBody2D" parent="."]
 
