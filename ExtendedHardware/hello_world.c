@@ -121,7 +121,7 @@ int main() {
                 		alt_printf(" speed: none");
                 	}
                 }
-                else if (movement > 20){
+                else if (movement > 10){
                 	alt_printf("right");
                 	if (movement == 0x20){
                 	   alt_printf(" speed: still");
