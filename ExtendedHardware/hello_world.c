@@ -17,6 +17,7 @@
 #define JUMP_THRESHOLD 20  // 0.5g change for jump detection
 #define BUFFER_SIZE 5  // Number of past samples to store
 
+
 alt_8 pwm = 0;
 alt_u8 led;
 int level;
@@ -88,45 +89,61 @@ int main() {
     while (1) {
     	//led_write(led << 1);
         alt_up_accelerometer_spi_read_x_axis(acc_dev, & x_read);
-        //alt_printf("x data: %x\n", x_read);
-        movement = convert_read(x_read, & level, & led);
+        alt_printf("x data: %x\n", x_read);
+        movement = x_read; //convert_read(x_read, & level, & led);
 
-        alt_printf("direction: ");
-
-        if (movement < 8){
+        /*if (x_read > 0x30){
         	alt_printf("left");
-        	if (movement == 8){
-        		alt_printf(" speed: slow");
-        	}
-        	else if (movement == 4){
-        		alt_printf(" speed: medium");
-        	}
-        	else if (movement == 2){
-        		alt_printf(" speed: fast");
-        	}
-        	else if (movement == 1){
-        		alt_printf(" speed: none");
-        	}
         }
-        else if (movement > 20){
-        	alt_printf("right");
-        	if (movement == 0x20){
-        	   alt_printf(" speed: slow");
-            }
-        	else if (movement == 0x40){
-        	   alt_printf(" speed: medium");
-        	}
-        	else if (movement == 0x80){
-        	   alt_printf(" speed: fast");
-        	}
-        	else if (movement == 0x80){
-        	   alt_printf(" speed: none");
-        	}
+        else if (x_read < 0xFFFFFF00){
+            alt_printf("centre");
         }
         else{
-        	alt_printf("centre");
-        	alt_printf(" speed: none");
-        }
+            alt_printf("right");
+        }*/
+
+        movement = convert_read(x_read, & level, & led);
+
+                alt_printf("direction: ");
+
+                if (movement < 10){
+                	alt_printf("left");
+                	if (movement == 8){
+                		alt_printf(" speed: still");
+                	}
+                	else if (movement == 4){
+                		alt_printf(" speed: medium");
+                	}
+                	else if (movement == 2){
+                		alt_printf(" speed: fast");
+                	}
+                	else if (movement == 1){
+                		alt_printf(" speed: none");
+                	}
+                }
+                else if (movement > 20){
+                	alt_printf("right");
+                	if (movement == 0x20){
+                	   alt_printf(" speed: still");
+                    }
+                	else if (movement == 0x40){
+                	   alt_printf(" speed: medium");
+                	}
+                	else if (movement == 0x80){
+                	   alt_printf(" speed: fast");
+                	}
+                	else if (movement == 0x80){
+                	   alt_printf(" speed: none");
+                	}
+                }
+                else{
+                	alt_printf("centre");
+                	alt_printf(" speed: still");
+                }
+
+        //alt_printf("direction: ");
+
+        //alt_printf(x_read);
 
         //alt_printf("%x", movement);
 
@@ -137,10 +154,7 @@ int main() {
         float dz = z_read - previous_z;  // Change in Z acceleration
 
         if (dz > JUMP_THRESHOLD) {
-            alt_printf(" dash: dashing");
-        }
-        else{
-        	alt_printf(" dash: none");
+            alt_printf(" dashing");
         }
 
         // Update buffer
@@ -155,14 +169,11 @@ int main() {
 		IOWR_ALTERA_AVALON_PIO_DATA(LED_BASE,jump);
 
 		if (jump == (0b0000000001)) {
-		     alt_printf(" jump: jumping");
-		}
-		else{
-		     alt_printf(" jump: grounded");
+		     alt_printf(" jumping");
 		}
 
 		alt_printf("\n");
-        usleep(100000);
+        usleep(10000);
     }
 
     return 0;
