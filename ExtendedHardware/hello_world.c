@@ -76,6 +76,8 @@ int main() {
     alt_u8 logg;
     alt_u8 isJumping;
     int jump;
+    char parse_hex;
+    int result;
 
     float z_buffer[BUFFER_SIZE] = {0};  // Circular buffer to store past Z values
     int buffer_index = 0;
@@ -102,6 +104,44 @@ int main() {
             alt_printf("right");
         }*/
 
+        alt_u32 mask = 0x000000F0;
+
+        alt_u32 is_right_tilt = x_read & 0xF0000000;
+        //alt_printf("right? %x\n", is_right_tilt);
+
+
+        	parse_hex = x_read & mask;
+        	result = parse_hex >> 4;
+        	result = result & 0x0000000F;
+        	if (is_right_tilt == 0xF0000000){
+        		result = 15-result;
+        		alt_printf("direction: right", result);
+        	}
+        	else{
+        		alt_printf("direction: left", result);
+        	}
+
+
+        /*else if (x_read > 0xFFFFF000){
+
+        	//parse_hex = ~parse_hex+1;
+            parse_hex = x_read & mask;
+            result = parse_hex >> 4;
+            result = result & 0x0000000F;
+            //result = 0x10 - result;
+            alt_printf("parsed data: %x\n", 16-result);
+
+        }*/
+
+        if (result > 0x9){
+        	result += 0x6;
+        }
+
+        //result = result << 1;
+
+        alt_printf(" speed: %x\n", result, 0);
+
+        /*
         movement = convert_read(x_read, & level, & led);
 
                 alt_printf("direction: ");
@@ -145,7 +185,7 @@ int main() {
 
         //alt_printf(x_read);
 
-        //alt_printf("%x", movement);
+        //alt_printf("%x", movement);*/
 
         alt_up_accelerometer_spi_read_z_axis(acc_dev, & z_read);
         //alt_printf("z data: %x\n", z_read);
