@@ -17,7 +17,7 @@ var platform_moving_pos = [] # Table: MovingPlatforms
 var platforms_loaded: bool = false
 var spawn_count: int = 290
 var spawn_break_count: int = 70
-var spawn_moving_count: int = 20
+var spawn_moving_count: int = 30
 var spawn_range_x: Vector2 = Vector2(-120, 120)
 var spawn_range_y: Vector2 = Vector2(-4000, 0)
 # References to scenes

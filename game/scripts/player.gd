@@ -2,7 +2,7 @@ extends CharacterBody2D
 
 
 const SPEED = 130.0
-const JUMP_VELOCITY = -400.0
+const JUMP_VELOCITY = -520.0
 const DASH_SPEED = 400
 const DASH_DURATION = 0.2
 const DASH_COOLDOWN = 1
@@ -23,9 +23,6 @@ const PORT = 12000
 func _physics_process(delta: float) -> void:
 	#print("my position: ", position)
 	GameManager.player_pos = position
-	if is_connected and server.get_available_bytes() > 0:
-		var received_data = server.get_utf8_string(server.get_available_bytes())
-		print("Received: ", received_data)
 
 	if not is_on_floor(): 
 		velocity += get_gravity() * delta
