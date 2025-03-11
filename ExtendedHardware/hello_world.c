@@ -14,9 +14,14 @@
 #define PWM_PERIOD 16
 
 #define SCALE_FACTOR 0.0078
-#define JUMP_THRESHOLD 20  // 0.5g change for jump detection
+#define JUMP_THRESHOLD 200  // 0.5g change for jump detection
 #define BUFFER_SIZE 5  // Number of past samples to store
+#define DASH_DETECTION_COUNT 3  // Number of consecutive readings needed for dash detection
 
+// FIR filter parameters for X-axis
+#define X_FIR_ORDER 4  // 4-tap filter for X-axis smoothing
+#define X_DIRECTION_RIGHT_THRESHOLD -10  // Threshold for right direction (ADJUSTED - SWITCHED DIRECTIONS)
+#define X_DIRECTION_LEFT_THRESHOLD 10    // Threshold for left direction (ADJUSTED - SWITCHED DIRECTIONS)
 
 alt_8 pwm = 0;
 alt_u8 led;
@@ -76,11 +81,24 @@ int main() {
     alt_u8 logg;
     alt_u8 isJumping;
     int jump;
-    char parse_hex;
+    int parse_hex;
     int result;
 
+    // Z-axis buffer for dashing detection
     float z_buffer[BUFFER_SIZE] = {0};  // Circular buffer to store past Z values
     int buffer_index = 0;
+
+    // Variables for dash detection
+    int dash_counter = 0;
+    int is_dashing = 0;
+
+    // X-axis FIR filter implementation
+    float x_fir_coeffs[X_FIR_ORDER] = {0.4, 0.3, 0.2, 0.1};  // Weighted toward recent readings
+    alt_32 x_history[X_FIR_ORDER] = {0};  // Buffer to store x values for FIR filter
+    alt_u32 filtered_x = 0;  // Filtered output
+    //char* direction = "centre";  // Direction string to print
+    //char* speed = "still";       // Speed string to print
+
     alt_up_accelerometer_spi_dev * acc_dev;
     acc_dev = alt_up_accelerometer_spi_open_dev("/dev/accelerometer_spi_0");
     if (acc_dev == NULL) { // if return 1, check if the spi ip name is "accelerometer_spi"
@@ -89,131 +107,99 @@ int main() {
 
     timer_init(sys_timer_isr);
     while (1) {
-    	//led_write(led << 1);
-        alt_up_accelerometer_spi_read_x_axis(acc_dev, & x_read);
-        //alt_printf("x data: %x\n", x_read);
-        movement = x_read; //convert_read(x_read, & level, & led);
-
-        /*if (x_read > 0x30){
-        	alt_printf("left");
-        }
-        else if (x_read < 0xFFFFFF00){
-            alt_printf("centre");
-        }
-        else{
-            alt_printf("right");
-        }*/
-
-        alt_u32 mask = 0x000000F0;
+        // Read X-axis data
+        alt_up_accelerometer_spi_read_x_axis(acc_dev, &x_read);
 
         alt_u32 is_right_tilt = x_read & 0xF0000000;
-        //alt_printf("right? %x\n", is_right_tilt);
-
-
-        	parse_hex = x_read & mask;
-        	result = parse_hex >> 4;
-        	result = result & 0x0000000F;
-        	if (is_right_tilt == 0xF0000000){
-        		result = 15-result;
-        		alt_printf("direction: right", result);
-        	}
-        	else{
-        		alt_printf("direction: left", result);
-        	}
-
-
-        /*else if (x_read > 0xFFFFF000){
-
-        	//parse_hex = ~parse_hex+1;
-            parse_hex = x_read & mask;
-            result = parse_hex >> 4;
-            result = result & 0x0000000F;
-            //result = 0x10 - result;
-            alt_printf("parsed data: %x\n", 16-result);
-
-        }*/
-
-        if (result > 0x9){
-        	result += 0x6;
+        if (is_right_tilt == 0xF0000000){
+        	alt_printf("direction: right\n");
+        	x_read = ~x_read + 1;
+        }
+        else{
+        	alt_printf("direction: left\n");
         }
 
-        //result = result << 1;
+        // Apply FIR filter to X-axis data
+        // 1. Shift values in history buffer
+        for (int i = X_FIR_ORDER-1; i > 0; i--) {
+            x_history[i] = x_history[i-1];
+        }
+        // 2. Add new sample
+        x_history[0] = x_read;
 
-        alt_printf(" speed: %x\n", result);
+        // 3. Apply FIR filter (compute weighted sum)
+        filtered_x = 0;
+        for (int i = 0; i < X_FIR_ORDER; i++) {
+            filtered_x += x_history[i] * x_fir_coeffs[i];
+        }
 
-        /*
-        movement = convert_read(x_read, & level, & led);
+        //alt_printf(" filtered x : %x\n", filtered_x);
 
-                alt_printf("direction: ");
+        // 4. Determine direction based on filtered output
+        // Note: Directions have been inverted from previous implementation
+        alt_u32 mask = 0x000000F0;
 
-                if (movement < 10){
-                	alt_printf("left");
-                	if (movement == 8){
-                		alt_printf(" speed: still");
-                	}
-                	else if (movement == 4){
-                		alt_printf(" speed: medium");
-                	}
-                	else if (movement == 2){
-                		alt_printf(" speed: fast");
-                	}
-                	else if (movement == 1){
-                		alt_printf(" speed: none");
-                	}
-                }
-                else if (movement > 10){
-                	alt_printf("right");
-                	if (movement == 0x20){
-                	   alt_printf(" speed: still");
-                    }
-                	else if (movement == 0x40){
-                	   alt_printf(" speed: medium");
-                	}
-                	else if (movement == 0x80){
-                	   alt_printf(" speed: fast");
-                	}
-                	else if (movement == 0x80){
-                	   alt_printf(" speed: none");
-                	}
-                }
-                else{
-                	alt_printf("centre");
-                	alt_printf(" speed: still");
+                //alt_u32 is_right_tilt = x_read & 0xF0000000;
+                //alt_printf("right? %x\n", is_right_tilt);
+
+
+                	parse_hex = filtered_x & mask;
+                	result = parse_hex >> 4;
+                	result = result & 0x0000000F;
+
+                if (result > 0x9){
+                	result += 0x6;
                 }
 
-        //alt_printf("direction: ");
+                //result = result << 1;
 
-        //alt_printf(x_read);
+                alt_printf(" speed: %x\n", result);
 
-        //alt_printf("%x", movement);*/
+        // Process original movement data for LED pattern (if needed)
+        //movement = convert_read(x_read, &level, &led);
 
-        alt_up_accelerometer_spi_read_z_axis(acc_dev, & z_read);
-        //alt_printf("z data: %x\n", z_read);
+        // Print direction and speed based on filtered values
+        //alt_printf("direction: %s speed: %s", direction, speed);
+
+        // Read Z-axis for dash detection
+        alt_up_accelerometer_spi_read_z_axis(acc_dev, &z_read);
 
         float previous_z = z_buffer[(buffer_index + BUFFER_SIZE - 1) % BUFFER_SIZE];  // Get last stored Z value
         float dz = z_read - previous_z;  // Change in Z acceleration
 
+        // Dash detection logic
         if (dz > JUMP_THRESHOLD) {
-            alt_printf(" dashing");
+            // Increment the dash counter when threshold is exceeded
+            dash_counter++;
+            if (dash_counter >= DASH_DETECTION_COUNT) {
+                is_dashing = 1;  // Set dashing flag if threshold exceeded for consecutive readings
+            }
+        } else {
+            // Reset counter if threshold not exceeded
+            dash_counter = 0;
+            is_dashing = 0;
         }
 
         // Update buffer
         z_buffer[buffer_index] = z_read;
         buffer_index = (buffer_index + 1) % BUFFER_SIZE;
 
-		//Gets the data from the pb, recall that a 0 means the button is pressed
-		jump = ~IORD_ALTERA_AVALON_PIO_DATA(BUTTON_BASE);
-		//Mask the bits so the leftmost LEDs are off (we only care about LED3-0)
-		jump &= (0b0000000001);
-		//Send the data to the LED
-		IOWR_ALTERA_AVALON_PIO_DATA(LED_BASE,jump);
+        // Check button for jump
+        jump = ~IORD_ALTERA_AVALON_PIO_DATA(BUTTON_BASE);
+        jump &= (0b0000000001);
+        IOWR_ALTERA_AVALON_PIO_DATA(LED_BASE, jump);
 
-		if (jump == (0b0000000001)) {
-		     alt_printf(" jumping");
-		}
+        if (jump == (0b1)) {
+            alt_printf(" jumping");
+        }
 
-		alt_printf("\n");
-        usleep(10000);
+        // Print dashing if condition is met
+        if (is_dashing) {
+            alt_printf(" dashing");
+        }
+
+        alt_printf("\n");
+        usleep(100);
     }
 
     return 0;
