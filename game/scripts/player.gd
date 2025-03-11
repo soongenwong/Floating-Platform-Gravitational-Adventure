@@ -41,7 +41,7 @@ func setup_udp_server() -> void:
 		print("Error binding to port ", server_port, ": ", err)
 		return
 	
-	print("UDP server listening on port ", server_port)
+	#print("UDP server listening on port ", server_port)
 
 func _physics_process(delta: float) -> void:
 	GameManager.player_pos = position
@@ -100,7 +100,7 @@ func process_keyboard_input() -> void:
 			current_direction = "centre"
 			current_speed = "still"
 			
-	print(GameManager.score)
+	#print(GameManager.score)
 
 func process_udp_input() -> void:
 	if udp.get_available_packet_count() > 0:
@@ -109,7 +109,7 @@ func process_udp_input() -> void:
 		var sender_port = udp.get_packet_port()
 		
 		var new_classification = packet_data.get_string_from_utf8()
-		print("Received classification: ", new_classification, " from ", sender_address, ":", sender_port)
+		#print("Received classification: ", new_classification, " from ", sender_address, ":", sender_port)
 		
 		var parts = new_classification.split(" + ")
 		if parts.size() == 4:
