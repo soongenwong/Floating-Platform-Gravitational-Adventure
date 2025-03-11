@@ -50,6 +50,12 @@ position = Vector2(-33, 24.027)
 [node name="platform3" parent="spawner" instance=ExtResource("2_jurr8")]
 position = Vector2(31, 24.027)
 
+[node name="platform4" parent="spawner" instance=ExtResource("2_jurr8")]
+position = Vector2(-65, 24.027)
+
+[node name="platform5" parent="spawner" instance=ExtResource("2_jurr8")]
+position = Vector2(63, 24.027)
+
 [node name="killzone" parent="." instance=ExtResource("4_ujtyr")]
 position = Vector2(972, 1000)
 

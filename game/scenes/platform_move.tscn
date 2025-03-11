@@ -10,7 +10,7 @@ _data = {
 point_count = 2
 
 [sub_resource type="RectangleShape2D" id="RectangleShape2D_tx06h"]
-size = Vector2(19, 7)
+size = Vector2(31, 9)
 
 [sub_resource type="Animation" id="Animation_28tb4"]
 length = 0.001
@@ -57,7 +57,8 @@ curve = SubResource("Curve2D_nmbmk")
 script = ExtResource("1_kbjwe")
 
 [node name="PathFollow2D" type="PathFollow2D" parent="."]
-position = Vector2(108, 147)
+position = Vector2(148.182, 147)
+progress = 40.1856
 
 [node name="RemoteTransform2D" type="RemoteTransform2D" parent="PathFollow2D"]
 remote_path = NodePath("../../AnimatableBody2D")
@@ -67,7 +68,6 @@ position = Vector2(108, 147)
 
 [node name="Sprite2D" type="Sprite2D" parent="AnimatableBody2D"]
 position = Vector2(5.75, 0.5)
-scale = Vector2(0.629032, 0.875)
 texture = ExtResource("1_wbwbo")
 region_enabled = true
 region_rect = Rect2(16.3872, 32.2393, 31.3852, 8.60304)
