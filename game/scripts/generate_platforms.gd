@@ -5,6 +5,9 @@ func _process(delta: float) -> void:
 		get_tree().change_scene_to_file("res://scenes/game.tscn")
 
 func _on_button_pressed() -> void:
+	GameManager.platform_pos = []
+	GameManager.platform_moving_pos = []
+	GameManager.platform_break_pos = []
 	spawn_platforms()
 	spawn_break()
 	spawn_moving()
