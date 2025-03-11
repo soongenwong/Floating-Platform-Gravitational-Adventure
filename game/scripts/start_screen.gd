@@ -1,9 +1,7 @@
 extends Control
 
 func _ready():
-	GameManager.platform_pos = []
-	GameManager.platform_moving_pos = []
-	GameManager.platform_break_pos = []
+	pass
 
 func _on_player_1_pressed() -> void:
 	GameManager.player = 1
