@@ -2,8 +2,7 @@ extends Node
 
 var score: int = 0
 var score_label: Label = null
-
-var player: int = 1 # player number
+ # player number
 var player_id: int = 0
 var other_id: int = 0
 var other_ready: bool = false # are all other players ready
