@@ -14,7 +14,7 @@
 #define PWM_PERIOD 16
 
 #define SCALE_FACTOR 0.0078
-#define JUMP_THRESHOLD 200  // 0.5g change for jump detection
+#define JUMP_THRESHOLD 350  // 0.5g change for jump detection
 #define BUFFER_SIZE 5  // Number of past samples to store
 #define DASH_DETECTION_COUNT 3  // Number of consecutive readings needed for dash detection
 
@@ -26,6 +26,99 @@
 alt_8 pwm = 0;
 alt_u8 led;
 int level;
+
+// 7-segment display patterns for hexadecimal digits 0-F
+// Segments: 6543210
+//           gfedcba
+const unsigned char seven_seg_digits_decode_gfedcba[16] = {
+    0x3F, // 0: 0011 1111 - 0
+    0x06, // 1: 0000 0110 - 1
+    0x5B, // 2: 0101 1011 - 2
+    0x4F, // 3: 0100 1111 - 3
+    0x66, // 4: 0110 0110 - 4
+    0x6D, // 5: 0110 1101 - 5
+    0x7D, // 6: 0111 1101 - 6
+    0x07, // 7: 0000 0111 - 7
+    0x7F, // 8: 0111 1111 - 8
+    0x6F, // 9: 0110 1111 - 9
+    0x77, // A: 0111 0111 - A
+    0x7C, // B: 0111 1100 - b
+    0x39, // C: 0011 1001 - C
+    0x5E, // D: 0101 1110 - d
+    0x79, // E: 0111 1001 - E
+    0x71  // F: 0111 0001 - F
+};
+
+// Function to display a hex digit on a specific HEX display
+void display_hex(int display_number, int digit) {
+    // Make sure digit is in the valid range (0-F)
+    digit &= 0x0F;
+
+    // Get the segment pattern for the digit
+    unsigned char segments = seven_seg_digits_decode_gfedcba[digit];
+
+    // Note: On many DE-series boards, the segments are active-low,
+    // so we invert the pattern (~segments). If your board uses active-high,
+    // remove the inversion.
+
+    // Select the appropriate display based on display_number
+    switch(display_number) {
+        case 0:
+            IOWR_ALTERA_AVALON_PIO_DATA(HEX0_BASE, ~segments);
+            break;
+        case 1:
+            IOWR_ALTERA_AVALON_PIO_DATA(HEX1_BASE, ~segments);
+            break;
+        case 2:
+            IOWR_ALTERA_AVALON_PIO_DATA(HEX2_BASE, ~segments);
+            break;
+        case 3:
+            IOWR_ALTERA_AVALON_PIO_DATA(HEX3_BASE, ~segments);
+            break;
+        case 4:
+            IOWR_ALTERA_AVALON_PIO_DATA(HEX4_BASE, ~segments);
+            break;
+        case 5:
+            IOWR_ALTERA_AVALON_PIO_DATA(HEX5_BASE, ~segments);
+            break;
+        default:
+            // Invalid display number
+            break;
+    }
+}
+
+// Function to display a multi-digit hexadecimal number across multiple displays
+// For example, display_hex_number(0xABCD, 4) will display ABCD on HEX3-HEX0
+void display_hex_number(unsigned int number, int num_digits) {
+    // Ensure num_digits is in valid range
+    if (num_digits > 6) num_digits = 6;
+
+    // Display each digit
+    for (int i = 0; i < num_digits; i++) {
+        // Extract the least significant digit
+        int digit = number & 0x0F;
+
+        alt_printf(alt_getchar());  // Blocks until data is received
+        //alt_printf("Received: %c\n", c);
+
+        // Display this digit on the appropriate display
+        display_hex(i, 0x0);
+
+        // Shift to the next digit
+        number >>= 4;
+    }
+}
+
+// Function to clear all displays
+void clear_hex_displays() {
+    // Write 0xFF to turn off all segments (assuming active-low)
+    IOWR_ALTERA_AVALON_PIO_DATA(HEX0_BASE, 0xFF);
+    IOWR_ALTERA_AVALON_PIO_DATA(HEX1_BASE, 0xFF);
+    IOWR_ALTERA_AVALON_PIO_DATA(HEX2_BASE, 0xFF);
+    IOWR_ALTERA_AVALON_PIO_DATA(HEX3_BASE, 0xFF);
+    IOWR_ALTERA_AVALON_PIO_DATA(HEX4_BASE, 0xFF);
+    IOWR_ALTERA_AVALON_PIO_DATA(HEX5_BASE, 0xFF);
+}
 
 void led_write(alt_u8 led_pattern) {
     IOWR(LED_BASE, 0, led_pattern);
@@ -106,6 +199,10 @@ int main() {
     }
 
     timer_init(sys_timer_isr);
+
+    for (int i = 0; i < 6; i++) {
+            display_hex(i, i);
+        }
     while (1) {
         // Read X-axis data
         alt_up_accelerometer_spi_read_x_axis(acc_dev, &x_read);
@@ -170,14 +267,7 @@ int main() {
         // Dash detection logic
         if (dz > JUMP_THRESHOLD) {
             // Increment the dash counter when threshold is exceeded
-            dash_counter++;
-            if (dash_counter >= DASH_DETECTION_COUNT) {
-                is_dashing = 1;  // Set dashing flag if threshold exceeded for consecutive readings
-            }
-        } else {
-            // Reset counter if threshold not exceeded
-            dash_counter = 0;
-            is_dashing = 0;
+        	alt_printf(" dashing");
         }
 
         // Update buffer
@@ -191,11 +281,6 @@ int main() {
 
         if (jump == (0b1)) {
             alt_printf(" jumping");
-        }
-
-        // Print dashing if condition is met
-        if (is_dashing) {
-            alt_printf(" dashing");
         }
 
         alt_printf("\n");
