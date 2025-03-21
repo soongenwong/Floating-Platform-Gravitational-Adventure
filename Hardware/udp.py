@@ -5,6 +5,8 @@ import re
 import time
 import select
 
+previous_message = ""
+
 # Try loading the JTAG UART
 try:
     ju = intel_jtag_uart.intel_jtag_uart()
@@ -71,6 +73,8 @@ try:
             if udp_socket in readable:
                 data, addr = udp_socket.recvfrom(1024)
                 message = data.decode('utf-8')
+                if message != "0":
+                    ju.write(message.encode('utf-8'))
                 process_godot_message(message)
         except (socket.error, select.error) as e:
             # Handle socket errors gracefully
@@ -98,9 +102,9 @@ try:
             except Exception as e:
                 print(f"Data processing error: {e}")
 
-        time.sleep(0.05)  # Slightly faster polling for better responsiveness
+        #time.sleep(0.05)  # Slightly faster polling for better responsiveness
 
-        ju.write(b'8')
+        
 
 except KeyboardInterrupt:
     print("Process stopped by user.")
