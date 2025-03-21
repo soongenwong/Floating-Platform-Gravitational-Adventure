@@ -14,7 +14,7 @@
 #define PWM_PERIOD 16
 
 #define SCALE_FACTOR 0.0078
-#define JUMP_THRESHOLD 350  // 0.5g change for jump detection
+#define DASH_THRESHOLD 350  // 0.5g change for jump detection
 #define BUFFER_SIZE 5  // Number of past samples to store
 
 alt_8 pwm = 0;
@@ -248,7 +248,7 @@ int main() {
         float dz = z_read - previous_z;  // Change in Z acceleration
 
         // Dash detection logic
-        if (dz > JUMP_THRESHOLD) {
+        if (dz > DASH_THRESHOLD) {
             // Increment the dash counter when threshold is exceeded
         	alt_printf(" dashing");
         }
