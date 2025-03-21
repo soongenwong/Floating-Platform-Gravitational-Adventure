@@ -119,15 +119,6 @@ void led_write(alt_u8 led_pattern) {
     IOWR(LED_BASE, 0, led_pattern);
 }
 
-alt_u8 convert_read(alt_32 acc_read, int * level, alt_u8 * led) {
-    acc_read += OFFSET;
-    alt_u8 val = (acc_read >> 6) & 0x07;
-    * led = (8 >> val) | (8 << (8 - val));
-    * level = (acc_read >> 1) & 0x1f;
-    //alt_printf("%x\n", *led);
-    return *led;
-}
-
 void sys_timer_isr() {
     IOWR_ALTERA_AVALON_TIMER_STATUS(TIMER_BASE, 0);
 
