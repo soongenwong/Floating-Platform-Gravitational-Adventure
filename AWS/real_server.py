@@ -65,11 +65,6 @@ spawn_moving_count = 30
 spawn_range_x = (-120, 120)  # Example range, adjust as needed
 spawn_range_y = (-4000, 0)    # Example range, adjust as needed
 
-# Generate platform data
-platform_positions = generate_positions(spawn_count, spawn_range_x, spawn_range_y)
-breaking_platform_positions = generate_special_positions(spawn_break_count, spawn_range_x, spawn_range_y)
-moving_platform_positions = generate_special_positions(spawn_moving_count, spawn_range_x, spawn_range_y)
-
 # Dictionary to store data for sending to Godot
 platform_data = {
     "Platforms": [],
@@ -77,33 +72,43 @@ platform_data = {
     "MovingPlatforms": []
 }
 
-# Add to DynamoDB
-platform_id = 1
-for xpos, ypos in platform_positions:
-    key = f"platform_{platform_id}"
-    add_platform_data("Platforms", key, xpos, ypos)
-    platform_data["Platforms"].append([xpos, ypos])
-    platform_id += 1
+def make_():
+    global spawn_count, spawn_break_count, spawn_moving_count, spawn_range_x, spawn_range_y
+    # Generate platform data
+    platform_positions = generate_positions(spawn_count, spawn_range_x, spawn_range_y)
+    breaking_platform_positions = generate_special_positions(spawn_break_count, spawn_range_x, spawn_range_y)
+    moving_platform_positions = generate_special_positions(spawn_moving_count, spawn_range_x, spawn_range_y)
 
-breaking_platform_id = 1
-for xpos, ypos in breaking_platform_positions:
-    key = f"breaking_{breaking_platform_id}"
-    add_platform_data("BreakingPlatforms", key, xpos, ypos)
-    platform_data["BreakingPlatforms"].append([xpos, ypos])
-    breaking_platform_id += 1
 
-moving_platform_id = 1
-for xpos, ypos in moving_platform_positions:
-    key = f"moving_{moving_platform_id}"
-    add_platform_data("MovingPlatforms", key, xpos, ypos)
-    platform_data["MovingPlatforms"].append([xpos, ypos])
-    moving_platform_id += 1
+    # Add to DynamoDB
+    platform_id = 1
+    for xpos, ypos in platform_positions:
+        key = f"platform_{platform_id}"
+        add_platform_data("Platforms", key, xpos, ypos)
+        platform_data["Platforms"].append([xpos, ypos])
+        platform_id += 1
+
+    breaking_platform_id = 1
+    for xpos, ypos in breaking_platform_positions:
+        key = f"breaking_{breaking_platform_id}"
+        add_platform_data("BreakingPlatforms", key, xpos, ypos)
+        platform_data["BreakingPlatforms"].append([xpos, ypos])
+        breaking_platform_id += 1
+
+    moving_platform_id = 1
+    for xpos, ypos in moving_platform_positions:
+        key = f"moving_{moving_platform_id}"
+        add_platform_data("MovingPlatforms", key, xpos, ypos)
+        platform_data["MovingPlatforms"].append([xpos, ypos])
+        moving_platform_id += 1
 
 
 # Start server - KEEP THESE LINES!
 welcome_socket = socket.socket(socket.AF_INET, socket.SOCK_STREAM)
 welcome_socket.bind(('0.0.0.0', server_port))
 welcome_socket.listen(2)
+
+make_()
 
 # At the top of your script, add:
 
@@ -138,7 +143,7 @@ def handle_client(client_socket, client_num, other_client):
             jsoned = extract_values(cmsg_str)
             if len(jsoned) == 3 and jsoned[0] != None:
                 print(f"Received from client {client_num}: {jsoned}")
-                other_client.sendall((str(jsoned[1]) + " " + str(jsoned[2])).encode())
+                other_client.sendall((str(jsoned[0]) + " " + str(jsoned[1]) + " " + str(jsoned[2])).encode())
 
     except Exception as e:
         print(f"Error with client {client_num}: {e}")

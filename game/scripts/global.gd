@@ -6,11 +6,10 @@ var closing_bracket: bool = 0
 	
 var socket = StreamPeerTCP.new()
 func _ready():
-	if GameManager.player:
-		print("Connecting to server...")
-		var error = socket.connect_to_host("18.170.218.235", 12000) # Aaditya's EC2 instance IP.
-		if error != OK:
-			print("Error connecting: " + str(error))
+	print("Connecting to server...")
+	var error = socket.connect_to_host("35.177.118.142", 12000)
+	if error != OK:
+		print("Error connecting: " + str(error))
 	
 func _process(_delta):
 	socket.poll()
@@ -25,11 +24,10 @@ func _process(_delta):
 			var received_data = socket.get_available_bytes()
 			#print("received_data: ", received_data)
 			if received_data > 0:
-				var raw_data = socket.get_string(received_data)  # Read full incoming message
+				var raw_data = socket.get_string(received_data)
 				#print("raw: ", raw_data)
-				buffer += raw_data  # Append to buffer in case of fragmentation
+				buffer += raw_data
 
-				# Try parsing JSON
 				var json = JSON.new()
 				var parse_result = json.parse(buffer)
 				if parse_result == OK:
@@ -37,8 +35,8 @@ func _process(_delta):
 					var parsed_data = json.get_data()
 					#print("parsed_data: ", parsed_data)
 					if parsed_data is Dictionary:
-						load_platform_data(parsed_data)  # Call function to load data
-						buffer = ""  # Reset buffer after successful parsing
+						load_platform_data(parsed_data)
+						buffer = ""
 						GameManager.platforms_loaded = 1
 					else:
 						print("Received malformed JSON data")
@@ -46,10 +44,8 @@ func _process(_delta):
 					#print("JSON parsing error: ", json.get_error_message())
 		else:
 			if socket.get_available_bytes() > 0:
-				# Read the data
 				var data = socket.get_data(socket.get_available_bytes())
 				if data[0] == OK:
-					# Print the received data
 					var received_data = data[1].get_string_from_utf8()
 					GameManager.other_player_pos = string_to_vector2(received_data)
 					var got_id = get_id_0(received_data)
@@ -75,7 +71,6 @@ func _exit_tree():
 func load_platform_data(parsed_data):
 	#print("Received platform data: ", parsed_data)
 
-	# Load data into GameManager arrays
 	if parsed_data.has("Platforms"):
 		GameManager.platform_pos = parsed_data["Platforms"]
 	if parsed_data.has("BreakingPlatforms"):

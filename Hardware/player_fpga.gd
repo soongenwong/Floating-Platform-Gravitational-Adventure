@@ -1,10 +1,10 @@
 extends CharacterBody2D
 
-const SPEED_FAST = 90.0
-const SPEED_MEDIUM = 70.0
+const SPEED_FAST = 130.0
+const SPEED_MEDIUM = 100.0
 const SPEED_STILL = 0.0
 const DASH_SPEED = 400
-const JUMP_VELOCITY = -400.0
+const JUMP_VELOCITY = -520.0
 const GRAVITY = 980.0
 
 # Create UDP server

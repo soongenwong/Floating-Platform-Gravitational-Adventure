@@ -1,0 +1,82 @@
+[gd_scene load_steps=6 format=3 uid="uid://qrkmhde05bes"]
+
+[ext_resource type="Script" path="res://scripts/start_screen.gd" id="1_asv3o"]
+[ext_resource type="PackedScene" uid="uid://87y1humnb1j4" path="res://scenes/player.tscn" id="2_iysbi"]
+[ext_resource type="Texture2D" uid="uid://f8xlo7v7bl7t" path="res://assets/sprites/mountain.jpg" id="2_v13h4"]
+
+[sub_resource type="WorldBoundaryShape2D" id="WorldBoundaryShape2D_bxlcs"]
+distance = -943.0
+
+[sub_resource type="SegmentShape2D" id="SegmentShape2D_rahnj"]
+b = Vector2(0, 275)
+
+[node name="start_screen" type="Control"]
+layout_mode = 3
+anchors_preset = 15
+anchor_right = 1.0
+anchor_bottom = 1.0
+grow_horizontal = 2
+grow_vertical = 2
+script = ExtResource("1_asv3o")
+
+[node name="Sprite2D" type="Sprite2D" parent="."]
+position = Vector2(969, 543)
+scale = Vector2(4.14147, 4.15637)
+texture = ExtResource("2_v13h4")
+
+[node name="Player" parent="." instance=ExtResource("2_iysbi")]
+z_index = 0
+position = Vector2(865, 754)
+scale = Vector2(10, 10.036)
+
+[node name="Label" type="Label" parent="."]
+layout_mode = 0
+offset_left = 417.0
+offset_top = 184.0
+offset_right = 1540.0
+offset_bottom = 435.0
+theme_override_colors/font_color = Color(0, 0, 0, 1)
+theme_override_font_sizes/font_size = 120
+text = "Choose Your Player"
+
+[node name="Player_1" type="Button" parent="."]
+z_index = 1
+layout_mode = 0
+offset_left = 219.0
+offset_top = 486.0
+offset_right = 897.0
+offset_bottom = 829.0
+theme_override_font_sizes/font_size = 60
+text = "Player 1"
+
+[node name="Player_2" type="Button" parent="."]
+z_index = 1
+layout_mode = 0
+offset_left = 1043.0
+offset_top = 490.0
+offset_right = 1695.0
+offset_bottom = 829.0
+theme_override_font_sizes/font_size = 60
+text = "Player 2"
+
+[node name="StaticBody2D" type="StaticBody2D" parent="."]
+position = Vector2(-176, -22)
+
+[node name="CollisionShape2D" type="CollisionShape2D" parent="StaticBody2D"]
+shape = SubResource("WorldBoundaryShape2D_bxlcs")
+
+[node name="CollisionShape2D2" type="CollisionShape2D" parent="StaticBody2D"]
+position = Vector2(1156, 786)
+shape = SubResource("SegmentShape2D_rahnj")
+
+[node name="Button" type="Button" parent="."]
+modulate = Color(1, 1, 1, 0)
+layout_mode = 0
+offset_left = 1249.0
+offset_top = 173.0
+offset_right = 1472.0
+offset_bottom = 382.0
+
+[connection signal="pressed" from="Player_1" to="." method="_on_player_1_pressed"]
+[connection signal="pressed" from="Player_2" to="." method="_on_player_2_pressed"]
+[connection signal="pressed" from="Button" to="." method="_on_button_pressed"]
