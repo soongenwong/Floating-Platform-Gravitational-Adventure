@@ -16,8 +16,6 @@
 #define SCALE_FACTOR 0.0078
 #define JUMP_THRESHOLD 350  // 0.5g change for jump detection
 #define BUFFER_SIZE 5  // Number of past samples to store
-#define ABUFFER_SIZE 10  // Number of past samples to store
-#define DASH_DETECTION_COUNT 3  // Number of consecutive readings needed for dash detection
 
 alt_8 pwm = 0;
 alt_u8 led;
