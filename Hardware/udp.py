@@ -102,7 +102,7 @@ try:
             except Exception as e:
                 print(f"Data processing error: {e}")
 
-        #time.sleep(0.05)  # Slightly faster polling for better responsiveness
+        time.sleep(0.05)  # Slightly faster polling for better responsiveness
 
         
 
